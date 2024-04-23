@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./static/icon/favicon48.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/movie.css">
+    <title>{{.title}}</title>
+
+    <style>
+        body {
+            background-color: #242424;
+        }
+        .container {
+            width: 100%;
+            text-align: center;
+        }
+        video {
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+     <!-- 黑色导航 start -->
+     <div class="nav_cantainer">
+        <div class="wrap">
+            <ul class="nav">
+                <li><a href="/nav">首页</a><span>|</span></li>
+                <li><a href="/video">电影</a><span>|</span></li>
+                <li><a href="#">动漫</a><span>|</span></li>
+                <li><a href="#">教程</a></li>
+            </ul>
+
+            <ul class="user">
+                <li><a href="#">登录</a><span>|</span></li>
+                <li><a href="#">注册</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 黑色导航 end -->
+    <div class="container">
+        <video preload="auto" crossorigin="anonymous" controls autoplay width="320">
+            <source src="/static/video/movie/{{.name}}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+/* 黑色导航 start */
+.nav_cantainer {
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    background-color: black;
+    border-bottom: 1px solid white;
+    font-size: 12px;
+}
+
+.nav_cantainer a {
+    color: #b0b0b0;
+}
+
+.nav_cantainer a:hover {
+    color: orange;
+}
+
+.nav_cantainer .wrap {
+    width: 1080px;
+    margin: 0 auto;
+}
+
+.nav_cantainer .wrap .nav {
+    float: left;
+}
+
+.nav_cantainer .wrap .nav li {
+    float: left;
+}
+
+.nav_cantainer .wrap span {
+    color: #242424;
+    margin: 0 3.6px;
+}
+
+.nav_cantainer .wrap .user {
+    float: right;
+}
+
+.nav_cantainer .wrap .user li {
+    float: left;
+}
+
+/* 黑色导航 end */

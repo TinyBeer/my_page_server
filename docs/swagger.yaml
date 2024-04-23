@@ -1,0 +1,148 @@
+basePath: /
+definitions:
+  model.LoginRequest:
+    properties:
+      password:
+        maxLength: 18
+        minLength: 3
+        type: string
+      username:
+        maxLength: 10
+        minLength: 4
+        type: string
+    type: object
+  model.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      message:
+        type: string
+      refresh_token:
+        type: string
+      status:
+        type: string
+    type: object
+  model.VideoItem:
+    properties:
+      image:
+        type: string
+      intro:
+        type: string
+      name:
+        type: string
+      time:
+        type: string
+      title:
+        type: string
+    type: object
+  model.VideoListResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+      videoes:
+        items:
+          $ref: '#/definitions/model.VideoItem'
+        type: array
+    type: object
+host: 127.0.0.1:9999
+info:
+  contact:
+    email: support@swagger.io
+    name: tiny beer
+    url: http://www.swagger.io/support
+  description: 用于个人文件管理
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 个人主页
+  version: "1.0"
+paths:
+  /user/auth:
+    post:
+      consumes:
+      - application/json
+      description: 使用access_token验证用户身份
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 验证用户身份
+      tags:
+      - 用户相关接口
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: 完成用户登陆操作分发access_token和refresh_token
+      parameters:
+      - description: 登录参数
+        in: body
+        name: '{object}'
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LoginResponse'
+      summary: 用于用户登录
+      tags:
+      - 用户相关接口
+  /user/refresh:
+    post:
+      consumes:
+      - application/json
+      description: 使用refresh_token更新访问令牌
+      parameters:
+      - description: refresh_token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 更新访问令牌
+      tags:
+      - 用户相关接口
+  /video/list:
+    get:
+      consumes:
+      - application/json
+      description: 使用access_token获取视频列表资源
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.VideoListResponse'
+      summary: 获取视频列表资源
+      tags:
+      - 视频相关接口
+swagger: "2.0"
