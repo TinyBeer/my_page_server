@@ -11,6 +11,7 @@ import (
 
 type WebDeli struct {
 	uc  usecase.UserUsecase
+	muc usecase.MemoUsecase
 	out io.Writer
 }
 
@@ -29,6 +30,7 @@ func (wd *WebDeli) router() *gin.Engine {
 	wd.registerPageRouter(r)
 	wd.registerUserRouter(r)
 	wd.registerVideoRouter(r)
+	wd.registerMemoRouter(r)
 	pprof.Register(r)
 	return r
 }
@@ -39,9 +41,10 @@ func (w *WebDeli) Start() {
 	r.Run(":9999")
 }
 
-func NewWebDeli(uc usecase.UserUsecase, out io.Writer) *WebDeli {
+func NewWebDeli(uc usecase.UserUsecase, muc usecase.MemoUsecase, out io.Writer) *WebDeli {
 	return &WebDeli{
 		uc:  uc,
+		muc: muc,
 		out: out,
 	}
 }

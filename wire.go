@@ -25,8 +25,12 @@ func InitializeServer() *delivery.WebDeli {
 		database.GetDb,
 		repository.NewUserRepo,
 		wire.Bind(new(repository.UserRepository), new(*repository.UserRepo)),
+		repository.NewMemoRepo,
+		wire.Bind(new(repository.MemoRepository), new(*repository.MemoRepo)),
 		usecase.NewUserUc,
 		wire.Bind(new(usecase.UserUsecase), new(*usecase.UserUc)),
+		usecase.NewMemoUc,
+		wire.Bind(new(usecase.MemoUsecase), new(*usecase.MemoUc)),
 		delivery.NewWebDeli,
 	)
 	return &delivery.WebDeli{}

@@ -1,5 +1,10 @@
 package model
 
+type SimpleResponse struct {
+	Status  string `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
+}
+
 type LoginRequest struct {
 	Username string `json:"username,omitempty" binding:"min=4,max=10"`
 	Password string `json:"password,omitempty" binding:"min=3,max=18"`
@@ -24,4 +29,28 @@ type VideoItem struct {
 	Time  string `json:"time"`
 	Name  string `json:"name"`
 	Intro string `json:"intro"`
+}
+
+type MemoListResponse struct {
+	Status  string     `json:"status,omitempty"`
+	Message string     `json:"message,omitempty"`
+	Memoes  []MemoItem `json:"memoes,omitempty"`
+}
+
+type MemoItem struct {
+	Id      uint   `json:"id,omitempty"`
+	Content string `json:"content,omitempty"`
+}
+
+type MemoCreateRequest struct {
+	Content string `json:"content,omitempty" binding:"min=2,max=255"`
+}
+
+type MemoUpdateRequest struct {
+	Id      uint   `json:"id,omitempty"`
+	Content string `json:"content,omitempty"`
+}
+
+type MemoDeleteRequest struct {
+	Id uint `json:"id,omitempty"`
 }

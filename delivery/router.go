@@ -23,3 +23,15 @@ func (wd *WebDeli) registerVideoRouter(r *gin.Engine) {
 		video.GET("/list", handler.VideoHandler{}.List)
 	}
 }
+
+func (wd *WebDeli) registerMemoRouter(r *gin.Engine) {
+	uh := handler.NewMemoHandler(wd.muc)
+	md := middleware.NewMiddleware(wd.uc)
+	memo := r.Group("/memo", md.JWT)
+	{
+		memo.GET("/list", uh.List)
+		memo.POST("/create", uh.Create)
+		memo.DELETE("/delete", uh.DeleteById)
+		memo.PUT("/update", uh.UpdateById)
+	}
+}

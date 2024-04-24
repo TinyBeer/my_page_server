@@ -23,8 +23,10 @@ func InitializeServer() *delivery.WebDeli {
 	db := database.GetDb(viper)
 	userRepo := repository.NewUserRepo(db)
 	userUc := usecase.NewUserUc(userRepo)
+	memoRepo := repository.NewMemoRepo(db)
+	memoUc := usecase.NewMemoUc(memoRepo)
 	rabbitMQ := mq.GetRabbitMQ(viper)
 	loggerOut := logger.NewLoggerOut(viper, rabbitMQ)
-	webDeli := delivery.NewWebDeli(userUc, loggerOut)
+	webDeli := delivery.NewWebDeli(userUc, memoUc, loggerOut)
 	return webDeli
 }

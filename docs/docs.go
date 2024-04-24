@@ -24,6 +24,161 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/memo/create": {
+            "post": {
+                "description": "使用access_token获取视频列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "备忘录相关接口"
+                ],
+                "summary": "根据内容创建新的备忘录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "备忘录创建参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MemoCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SimpleResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/memo/delete": {
+            "delete": {
+                "description": "使用access_token获取视频列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "备忘录相关接口"
+                ],
+                "summary": "根据Id删除备忘录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "备忘录删除参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MemoDeleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SimpleResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/memo/list": {
+            "get": {
+                "description": "使用access_token获取视频列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "备忘录相关接口"
+                ],
+                "summary": "获取备忘录列表资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.MemoListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/memo/update": {
+            "put": {
+                "description": "使用access_token获取视频列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "备忘录相关接口"
+                ],
+                "summary": "根据Id更新备忘录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "备忘录删除参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MemoUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SimpleResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/auth": {
             "post": {
                 "description": "使用access_token验证用户身份",
@@ -181,6 +336,74 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "refresh_token": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.MemoCreateRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "minLength": 2
+                }
+            }
+        },
+        "model.MemoDeleteRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.MemoItem": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.MemoListResponse": {
+            "type": "object",
+            "properties": {
+                "memoes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.MemoItem"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.MemoUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.SimpleResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
                     "type": "string"
                 },
                 "status": {
