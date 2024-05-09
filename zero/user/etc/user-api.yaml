@@ -1,0 +1,15 @@
+Name: user-api
+Host: 0.0.0.0
+Port: 8888
+Auth:
+  AccessSecret:  OT0c3YtZ1i
+  AccessExpire: 300
+  RefreshSecret: SCKALmXp23
+  RefreshExpire: 86400
+mysql:
+    username: root
+    password: "123456"
+    host: 192.168.56.101
+    port: 3306
+    dbname: gorm
+    timeout: 10
