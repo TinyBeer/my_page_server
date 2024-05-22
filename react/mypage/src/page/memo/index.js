@@ -1,19 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   EditOutlined,
   BgColorsOutlined,
   DeleteOutlined,
-  ArrowLeftOutlined,
 } from '@ant-design/icons';
 import { Input, Layout, Card, Row, Col } from 'antd';
-import { refreshToken } from './store/module/tokenStore';
+import { refreshToken } from '../../store/module/tokenStore';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createMemo,
   fetchMemoList,
   removeMemoById,
-} from './store/module/memoStore';
+} from '../../store/module/memoStore';
 import './css/memo.css';
 const { Meta } = Card;
 const { Header, Content } = Layout;

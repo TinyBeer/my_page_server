@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, Skeleton, Image } from 'antd';
-import { refreshToken } from './store/module/tokenStore';
+import { refreshToken } from '../../store/module/tokenStore';
 import { useNavigate } from 'react-router';
-import { fetchVideoList } from './store/module/cinemaStore';
+import { fetchVideoList } from '../../store/module/cinemaStore';
 
 export default function App({ displayAlert }) {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -30,6 +30,7 @@ export default function App({ displayAlert }) {
   }, [dispatch]);
 
   const videoList = useSelector((state) => state.cinema.videoList);
+  console.log(videoList);
   return (
     <Row
       gutter={{

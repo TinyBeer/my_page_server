@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { message } from 'antd';
 import './css/login.css';
-import './css/nav.css';
-import './css/reset.css';
-import { login } from './store/module/tokenStore';
+import '../../css/reset.css';
+import { login } from '../../store/module/tokenStore';
 import { useDispatch } from 'react-redux';
 
 export default function LoginModal() {
