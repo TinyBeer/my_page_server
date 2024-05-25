@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+
 	"personal_page/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,7 @@ func (m *Middleware) JWT(ctx *gin.Context) {
 	accessToken := ctx.GetHeader("Authorization")
 	if accessToken == "" {
 		ctx.JSON(http.StatusOK, "no token")
-		return
+		ctx.Abort()
 	}
 
 	user, err := m.uc.CheckAccessToken(ctx, accessToken)

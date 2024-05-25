@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  EditOutlined,
-  BgColorsOutlined,
+  // EditOutlined,
+  // BgColorsOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Input, Layout, Card, Row, Col } from 'antd';
+import { Input, Layout, Card, Row, Col, notification } from 'antd';
 import { refreshToken } from '../../store/module/tokenStore';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -23,6 +23,7 @@ export default function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [api, contextHolder] = notification.useNotification();
   useEffect(() => {
     const run = async () => {
       if (!loginStatus) {
@@ -42,10 +43,32 @@ export default function App() {
   const onChange = (e) => {
     setInputValue(e.target.value);
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (memoList.length >= 4) {
+        api.info({
+          message: `已近这么多了，快要装不下了`,
+          description: '',
+          placement: 'top',
+          duration: 2,
+        });
+        return;
+      }
+
+      dispatch(
+        createMemo(e.target.value, () => {
+          setInputValue('');
+          setRefresh((pre) => !pre);
+        })
+      );
+    }
+  };
   return (
     <Layout>
+      {contextHolder}
       <Header
         style={{
+          backgroundColor: '#fff',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -57,23 +80,14 @@ export default function App() {
           showCount
           maxLength={20}
           onChange={onChange}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              dispatch(
-                createMemo(e.target.value, () => {
-                  setInputValue('');
-                  setRefresh((pre) => !pre);
-                })
-              );
-            }
-          }}
-          placeholder='请输入要做的事？'
+          onKeyDown={handleKeyDown}
+          placeholder='想要做点啥？'
         />
       </Header>
       <Content style={{ padding: '0 48px', margin: '24px 16px' }}>
         <Row gutter={24}>
           {Array.isArray(memoList) &&
-            memoList.slice(0, 8).map((item, index) => {
+            memoList.slice(0, 4).map((item, index) => {
               const key = `${item.id}`;
               return (
                 <Col
@@ -104,8 +118,18 @@ export default function App() {
                     size='small'
                     cover={
                       <img
+                        height={240}
+                        width={240}
+                        style={{
+                          'clip-path':
+                            'polygon(15% 15%, 85% 15%, 85% 85%, 15% 85%)',
+                        }}
                         alt='example'
-                        src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
+                        src={
+                          'http://127.0.0.1:9999/static/img/memo/' +
+                          (item.id % 8) +
+                          '.png'
+                        }
                       />
                     }
                     actions={[
@@ -113,11 +137,11 @@ export default function App() {
                         key='delete'
                         onClick={() => dispatch(removeMemoById(item.id))}
                       />,
-                      <EditOutlined key='edit' />,
-                      <BgColorsOutlined
-                        key='pic'
-                        onClick={() => navigate('/nav')}
-                      />,
+                      // <EditOutlined key='edit' />,
+                      // <BgColorsOutlined
+                      //   key='pic'
+                      //   onClick={() => navigate('/nav')}
+                      // />,
                     ]}
                   >
                     <Meta title={item.content} />

@@ -17,7 +17,7 @@ type WebDeli struct {
 
 func (wd *WebDeli) router() *gin.Engine {
 	r := gin.New()
-	r.Use(gin.LoggerWithWriter(wd.out), gin.Recovery())
+	r.Use(gin.LoggerWithWriter(wd.out), gin.Recovery(), Cors())
 
 	r.Static("/static", "./static")
 
@@ -50,3 +50,23 @@ func NewWebDeli(uc usecase.UserUsecase, muc usecase.MemoUsecase, out io.Writer) 
 }
 
 var _ WebDelivery = &WebDeli{}
+
+func Cors() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		method := c.Request.Method
+		origin := c.Request.Header.Get("Origin")
+
+		if origin != "" {
+			c.Header("Access-Control-Allow-Origin", origin)
+			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+			c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, Authorization, X-CSRF-Token")
+			c.Header("Access-Control-Allow-Credentials", "true")
+		}
+
+		if method == "OPTIONS" {
+			c.AbortWithStatus(200)
+		}
+
+		c.Next()
+	}
+}
