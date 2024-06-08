@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 
@@ -8,12 +9,14 @@ import (
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 type WebDeli struct {
-	uc  usecase.UserUsecase
-	muc usecase.MemoUsecase
-	out io.Writer
+	port string
+	uc   usecase.UserUsecase
+	muc  usecase.MemoUsecase
+	out  io.Writer
 }
 
 func (wd *WebDeli) router() *gin.Engine {
@@ -39,13 +42,14 @@ func (wd *WebDeli) router() *gin.Engine {
 // Start implements WebDelivery.
 func (w *WebDeli) Start() {
 	r := w.router()
-	r.Run(":9999")
+	r.Run(w.port)
 }
 
-func NewWebDeli(uc usecase.UserUsecase, muc usecase.MemoUsecase) *WebDeli {
+func NewWebDeli(conf *viper.Viper, uc usecase.UserUsecase, muc usecase.MemoUsecase) *WebDeli {
 	return &WebDeli{
-		uc:  uc,
-		muc: muc,
+		uc:   uc,
+		muc:  muc,
+		port: fmt.Sprintf(":%d", conf.GetInt("server.port")),
 	}
 }
 

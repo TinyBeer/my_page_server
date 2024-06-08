@@ -23,6 +23,6 @@ func InitializeServer() *delivery.WebDeli {
 	userUc := usecase.NewUserUc(userRepo)
 	memoRepo := repository.NewMemoRepo(db)
 	memoUc := usecase.NewMemoUc(memoRepo)
-	webDeli := delivery.NewWebDeli(userUc, memoUc)
+	webDeli := delivery.NewWebDeli(viper, userUc, memoUc)
 	return webDeli
 }
