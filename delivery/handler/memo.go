@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+
 	"personal_page/model"
 	"personal_page/usecase"
 
@@ -26,12 +27,12 @@ func NewMemoHandler(uc usecase.MemoUsecase) *MemoHandler {
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
 // @Success 200 {object} model.MemoListResponse
-// @Router /memo/list [get]
+// @Router /memo [get]
 func (h *MemoHandler) List(ctx *gin.Context) {
 	list, err := h.usecase.List(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.MemoListResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 	} else {
@@ -40,9 +41,11 @@ func (h *MemoHandler) List(ctx *gin.Context) {
 			memoes = append(memoes, v.ToMemoItem())
 		}
 		ctx.JSON(http.StatusOK, model.MemoListResponse{
-			Status:  "success",
-			Message: "",
-			Memoes:  memoes,
+			Base: model.Base{
+				Status:  model.StatusOk,
+				Message: "",
+			},
+			Memoes: memoes,
 		})
 	}
 }
@@ -56,27 +59,27 @@ func (h *MemoHandler) List(ctx *gin.Context) {
 // @Param Authorization header string true "访问令牌"
 // @Param {object} body model.MemoCreateRequest true "备忘录创建参数"
 // @Success 200 {object} model.SimpleResponse
-// @Router /memo/create [post]
+// @Router /memo [post]
 func (h *MemoHandler) Create(ctx *gin.Context) {
 	var request model.MemoCreateRequest
 	err := ctx.ShouldBind(&request)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.SimpleResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
 	err = h.usecase.Create(ctx, request.Content)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.SimpleResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, model.SimpleResponse{
-		Status:  "success",
+	ctx.JSON(http.StatusOK, model.Base{
+		Status:  model.StatusOk,
 		Message: "",
 	})
 }
@@ -91,27 +94,27 @@ func (h *MemoHandler) Create(ctx *gin.Context) {
 // @Param {object} body model.MemoDeleteRequest true "备忘录删除参数"
 // @Success 200 {object} model.SimpleResponse
 // @Failed 200 {object} model.SimpleResponse
-// @Router /memo/delete [delete]
+// @Router /memo [delete]
 func (h *MemoHandler) DeleteById(ctx *gin.Context) {
 	var request model.MemoDeleteRequest
 	err := ctx.ShouldBind(&request)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.SimpleResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
 	err = h.usecase.DeleteById(ctx, request.Id)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.SimpleResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, model.SimpleResponse{
-		Status: "success",
+	ctx.JSON(http.StatusOK, model.Base{
+		Status: model.StatusOk,
 	})
 }
 
@@ -125,26 +128,26 @@ func (h *MemoHandler) DeleteById(ctx *gin.Context) {
 // @Param {object} body model.MemoUpdateRequest true "备忘录删除参数"
 // @Success 200 {object} model.SimpleResponse
 // @Failed 200 {object} model.SimpleResponse
-// @Router /memo/update [put]
+// @Router /memo [put]
 func (h *MemoHandler) UpdateById(ctx *gin.Context) {
 	var request model.MemoUpdateRequest
 	err := ctx.ShouldBind(&request)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.SimpleResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
 	err = h.usecase.UpdateById(ctx, request.Id, request.Content)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.SimpleResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, model.SimpleResponse{
-		Status: "success",
+	ctx.JSON(http.StatusOK, model.Base{
+		Status: model.StatusOk,
 	})
 }

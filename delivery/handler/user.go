@@ -2,8 +2,9 @@ package handler
 
 import (
 	"context"
-	"fmt"
 	"net/http"
+	"strings"
+
 	"personal_page/model"
 	"personal_page/usecase"
 
@@ -27,8 +28,8 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 	var loginRequest model.LoginRequest
 	err := ctx.ShouldBindJSON(&loginRequest)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.LoginResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
@@ -36,16 +37,17 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 
 	result, err := h.usecase.Login(context.Background(), loginRequest.Username, loginRequest.Password)
 	if err != nil {
-		ctx.JSON(http.StatusOK, model.LoginResponse{
-			Status:  "error",
+		ctx.JSON(http.StatusOK, model.Base{
+			Status:  model.StatusError,
 			Message: err.Error(),
 		})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, model.LoginResponse{
-		Status:       "ok",
-		Message:      "",
+	ctx.JSON(http.StatusOK, model.TokenResponse{
+		Base: model.Base{
+			Status: model.StatusOk,
+		},
 		AccessToken:  result.AccessToken,
 		RefreshToken: result.RefreshToken,
 	})
@@ -61,19 +63,9 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 // @Success 200 {object} string
 // @Router /user/auth [post]
 func (h *UserHandler) Auth(ctx *gin.Context) {
-	accessToken := ctx.GetHeader("Authorization")
-	if accessToken == "" {
-		ctx.JSON(http.StatusOK, "no token")
-		return
-	}
-
-	_, err := h.usecase.CheckAccessToken(context.Background(), accessToken)
-	if err != nil {
-		fmt.Println(err)
-		ctx.JSON(http.StatusOK, err.Error())
-		return
-	}
-	ctx.JSON(http.StatusOK, "success")
+	ctx.JSON(http.StatusOK, model.Base{
+		Status: model.StatusOk,
+	})
 }
 
 // RefreshToken 更新访问令牌
@@ -87,6 +79,7 @@ func (h *UserHandler) Auth(ctx *gin.Context) {
 // @Router /user/refresh [post]
 func (h *UserHandler) RefreshToken(ctx *gin.Context) {
 	refreshToken := ctx.GetHeader("Authorization")
+	refreshToken = strings.TrimPrefix(refreshToken, "Bearer ")
 	if refreshToken == "" {
 		ctx.JSON(http.StatusUnauthorized, "no token")
 		return
@@ -98,7 +91,12 @@ func (h *UserHandler) RefreshToken(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, accessToken)
+	ctx.JSON(http.StatusOK, model.TokenResponse{
+		Base: model.Base{
+			Status: model.StatusOk,
+		},
+		AccessToken: accessToken,
+	})
 }
 
 func NewUserHandler(uc usecase.UserUsecase) *UserHandler {

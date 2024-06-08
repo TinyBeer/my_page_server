@@ -1,25 +1,26 @@
-import { auth } from "./auth.js"
+import { auth } from './auth.js';
 
 var eContainer = document.querySelector('.container');
 window.onload = async () => {
-    if (await !auth) {
-        alert("請先完成登錄");
-        return
-    }
+  if (await !auth) {
+    alert('請先完成登錄');
+    return;
+  }
 
-    fetch('/video/list', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json', // 设置内容类型为JSON
-            'Authorization': localStorage.getItem('access_token'),
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data.status == "success") {
-                data.videoes.forEach(element => {
-                    eContainer.insertAdjacentHTML("beforeend", `
+  fetch('/video/list', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json', // 设置内容类型为JSON
+      Authorization: localStorage.getItem('access_token'),
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status == 'ok') {
+        data.videoes.forEach((element) => {
+          eContainer.insertAdjacentHTML(
+            'beforeend',
+            `
                 <a href="/movie/${element.name}">
                     <div class="board">
                         <div class="left">
@@ -34,12 +35,12 @@ window.onload = async () => {
                         </div>
                     </div>
                 </a>
-                `)
-                });
-            }
-
-        })
-        .catch(error => {
-            alert(error)
+                `
+          );
         });
-}
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};

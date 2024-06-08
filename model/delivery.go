@@ -1,6 +1,15 @@
 package model
 
-type SimpleResponse struct {
+const (
+	StatusOk    = "ok"
+	StatusError = "error"
+)
+
+const (
+	ErrorNoToken = "no token"
+)
+
+type Base struct {
 	Status  string `json:"status,omitempty"`
 	Message string `json:"message,omitempty"`
 }
@@ -10,16 +19,14 @@ type LoginRequest struct {
 	Password string `json:"password,omitempty" binding:"min=3,max=18"`
 }
 
-type LoginResponse struct {
-	Status       string `json:"status,omitempty"`
-	Message      string `json:"message,omitempty"`
+type TokenResponse struct {
+	Base
 	AccessToken  string `json:"access_token,omitempty"`
 	RefreshToken string `json:"refresh_token,omitempty"`
 }
 
 type VideoListResponse struct {
-	Status  string      `json:"status,omitempty"`
-	Message string      `json:"message,omitempty"`
+	Base
 	Videoes []VideoItem `json:"videoes,omitempty"`
 }
 
@@ -32,9 +39,8 @@ type VideoItem struct {
 }
 
 type MemoListResponse struct {
-	Status  string     `json:"status,omitempty"`
-	Message string     `json:"message,omitempty"`
-	Memoes  []MemoItem `json:"memoes,omitempty"`
+	Base
+	Memoes []MemoItem `json:"memoes,omitempty"`
 }
 
 type MemoItem struct {

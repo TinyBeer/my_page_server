@@ -12,8 +12,10 @@ func (wd *WebDeli) registerUserRouter(r *gin.Engine) {
 
 	user := r.Group("/user")
 	user.POST("/login", uh.Login)
-	user.POST("/auth", uh.Auth)
 	user.POST("/refresh", uh.RefreshToken)
+
+	md := middleware.NewMiddleware(wd.uc)
+	user.POST("/auth", md.JWT, uh.Auth)
 }
 
 func (wd *WebDeli) registerVideoRouter(r *gin.Engine) {

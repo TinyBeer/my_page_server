@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+
 	"personal_page/model"
 
 	"github.com/gin-gonic/gin"
@@ -17,15 +18,17 @@ type VideoHandler struct{}
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
 // @Success 200 {object} model.VideoListResponse
-// @Router /video/list [get]
+// @Router /video [get]
 func (h VideoHandler) List(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, h.listResponse())
 }
 
 func (h VideoHandler) listResponse() *model.VideoListResponse {
 	return &model.VideoListResponse{
-		Status:  "success",
-		Message: "",
+		Base: model.Base{
+			Status:  model.StatusOk,
+			Message: "",
+		},
 		Videoes: []model.VideoItem{
 			{
 				Image: "fastx.jpg",
