@@ -88,7 +88,7 @@ async function deleteMemo(id) {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.status == 'success') {
+      if (data.status == 'ok') {
         isOk = true;
       } else {
         console.log(data);
@@ -114,7 +114,7 @@ async function updateMemo(id, content) {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.status == 'success') {
+      if (data.status == 'ok') {
         isOk = true;
       }
     })
@@ -137,7 +137,7 @@ async function createMemo(content) {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.status == 'success') {
+      if (data.status == 'ok') {
         isOk = true;
       } else {
         console.log(data);

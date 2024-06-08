@@ -29,7 +29,7 @@ func GetDb(conf *viper.Viper) *gorm.DB {
 	}), &gorm.Config{
 		// SkipDefaultTransaction: true,
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:         "gorm_",
+			TablePrefix:         dbname + "-",
 			SingularTable:       true,
 			NameReplacer:        nil,
 			NoLowerCase:         false,

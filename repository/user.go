@@ -1,6 +1,9 @@
 package repository
 
 import (
+	"errors"
+	"log"
+
 	"personal_page/model"
 
 	"gorm.io/gorm"
@@ -11,10 +14,19 @@ type UserRepo struct {
 }
 
 func NewUserRepo(db *gorm.DB) *UserRepo {
-	err := db.AutoMigrate(&model.User{})
-	if err != nil {
-		panic(err)
+	admin := &model.User{
+		Name: "admin",
+		// bcrypt.GenerateFromPassword([]byte("1234"), bcrypt.DefaultCost)
+		Password: "$2a$10$1iXYspdrld4iQ.W41m6iaOvbOgoyOncycJQ8pWRCdzyOWg8bsEMnq",
 	}
+	has := db.Migrator().HasTable(admin)
+	if !has {
+		err := errors.Join(db.AutoMigrate(admin), db.Create(admin).Error)
+		if err != nil {
+			log.Fatalln(err)
+		}
+	}
+
 	return &UserRepo{
 		db: db,
 	}

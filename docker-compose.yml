@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mysql:
+    conatiner_name: my_page_mysql
+    image: mysql:5.7
+    networks:
+      - my_page_network
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=my_page
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./log:/var/log:ro
+      - ./data:/data
+      - ./conf/my.conf:/etc/my.conf
+      - ./data:/var/lib/mysql
+networks:
+  my_page_network:
+    driver: bridge
