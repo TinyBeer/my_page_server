@@ -10,8 +10,6 @@ import (
 	"personal_page/config"
 	"personal_page/database"
 	"personal_page/delivery"
-	"personal_page/logger"
-	"personal_page/mq"
 	"personal_page/repository"
 	"personal_page/usecase"
 )
@@ -25,8 +23,6 @@ func InitializeServer() *delivery.WebDeli {
 	userUc := usecase.NewUserUc(userRepo)
 	memoRepo := repository.NewMemoRepo(db)
 	memoUc := usecase.NewMemoUc(memoRepo)
-	rabbitMQ := mq.GetRabbitMQ(viper)
-	loggerOut := logger.NewLoggerOut(viper, rabbitMQ)
-	webDeli := delivery.NewWebDeli(userUc, memoUc, loggerOut)
+	webDeli := delivery.NewWebDeli(userUc, memoUc)
 	return webDeli
 }

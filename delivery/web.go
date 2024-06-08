@@ -3,6 +3,7 @@ package delivery
 import (
 	"io"
 	"net/http"
+
 	"personal_page/usecase"
 
 	"github.com/gin-contrib/pprof"
@@ -41,11 +42,10 @@ func (w *WebDeli) Start() {
 	r.Run(":9999")
 }
 
-func NewWebDeli(uc usecase.UserUsecase, muc usecase.MemoUsecase, out io.Writer) *WebDeli {
+func NewWebDeli(uc usecase.UserUsecase, muc usecase.MemoUsecase) *WebDeli {
 	return &WebDeli{
 		uc:  uc,
 		muc: muc,
-		out: out,
 	}
 }
 
