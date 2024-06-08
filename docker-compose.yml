@@ -13,7 +13,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - ./log:/var/log
-      - ./conf/my.cnf:/etc/my.cnf
+      - ./config/my.cnf:/etc/my.cnf
       - ./data:/var/lib/mysql
 networks:
   my_page_network:
