@@ -12,9 +12,8 @@ services:
       - MYSQL_DATABASE=my_page
       - TZ=Asia/Shanghai
     volumes:
-      - ./log:/var/log:ro
-      - ./data:/data
-      - ./conf/my.conf:/etc/my.conf
+      - ./log:/var/log
+      - ./conf/my.cnf:/etc/my.cnf
       - ./data:/var/lib/mysql
 networks:
   my_page_network:
