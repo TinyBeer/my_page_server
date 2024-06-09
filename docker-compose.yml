@@ -3,6 +3,7 @@ services:
   mysql:
     conatiner_name: my_page_mysql
     image: mysql:5.7
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
       - my_page_network
     ports:
