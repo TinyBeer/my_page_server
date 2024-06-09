@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+
 	"personal_page/model"
 	"personal_page/repository"
 )
@@ -14,6 +15,11 @@ func NewMemoUc(repo repository.MemoRepository) *MemoUc {
 	return &MemoUc{
 		repo: repo,
 	}
+}
+
+// CompleteWithId implements MemoUsecase.
+func (m *MemoUc) CompleteWithId(ctx context.Context, id uint) error {
+	return m.repo.CompleteWithId(id)
 }
 
 // Create implements MemoUsecase.
@@ -29,11 +35,6 @@ func (m *MemoUc) DeleteById(ctx context.Context, id uint) error {
 // List implements MemoUsecase.
 func (m *MemoUc) List(ctx context.Context) ([]*model.Memo, error) {
 	return m.repo.ListMemo()
-}
-
-// UpdateById implements MemoUsecase.
-func (m *MemoUc) UpdateById(ctx context.Context, id uint, content string) error {
-	return m.repo.UpdateMemoById(id, content)
 }
 
 var _ MemoUsecase = new(MemoUc)

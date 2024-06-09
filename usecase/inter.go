@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+
 	"personal_page/model"
 )
 
@@ -14,6 +15,6 @@ type UserUsecase interface {
 type MemoUsecase interface {
 	List(ctx context.Context) ([]*model.Memo, error)
 	Create(ctx context.Context, content string) error
-	UpdateById(ctx context.Context, id uint, content string) error
+	CompleteWithId(ctx context.Context, id uint) error
 	DeleteById(ctx context.Context, id uint) error
 }

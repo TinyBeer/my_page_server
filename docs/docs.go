@@ -24,6 +24,47 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/memo/complete": {
+            "put": {
+                "description": "使用access_token获取视频列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "备忘录相关接口"
+                ],
+                "summary": "根据Id更新备忘录完成状态",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "备忘录完成参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MemoCompleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Base"
+                        }
+                    }
+                }
+            }
+        },
         "/memo/create": {
             "post": {
                 "description": "使用access_token获取视频列表资源",
@@ -59,7 +100,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.SimpleResponse"
+                            "$ref": "#/definitions/model.Base"
                         }
                     }
                 }
@@ -100,7 +141,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.SimpleResponse"
+                            "$ref": "#/definitions/model.Base"
                         }
                     }
                 }
@@ -133,47 +174,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.MemoListResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/memo/update": {
-            "put": {
-                "description": "使用access_token获取视频列表资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "备忘录相关接口"
-                ],
-                "summary": "根据Id更新备忘录",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "备忘录删除参数",
-                        "name": "{object}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.MemoUpdateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.SimpleResponse"
                         }
                     }
                 }
@@ -239,7 +239,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.LoginResponse"
+                            "$ref": "#/definitions/model.Base"
                         }
                     }
                 }
@@ -277,7 +277,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/video/list": {
+        "/video": {
             "get": {
                 "description": "使用access_token获取视频列表资源",
                 "consumes": [
@@ -311,6 +311,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.Base": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "model.LoginRequest": {
             "type": "object",
             "properties": {
@@ -326,20 +337,11 @@ const docTemplate = `{
                 }
             }
         },
-        "model.LoginResponse": {
+        "model.MemoCompleteRequest": {
             "type": "object",
             "properties": {
-                "access_token": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "refresh_token": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
+                "id": {
+                    "type": "integer"
                 }
             }
         },
@@ -364,6 +366,9 @@ const docTemplate = `{
         "model.MemoItem": {
             "type": "object",
             "properties": {
+                "completed": {
+                    "type": "boolean"
+                },
                 "content": {
                     "type": "string"
                 },
@@ -381,28 +386,6 @@ const docTemplate = `{
                         "$ref": "#/definitions/model.MemoItem"
                     }
                 },
-                "message": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MemoUpdateRequest": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "model.SimpleResponse": {
-            "type": "object",
-            "properties": {
                 "message": {
                     "type": "string"
                 },

@@ -34,6 +34,6 @@ func (wd *WebDeli) registerMemoRouter(r *gin.Engine) {
 		memo.GET("/list", uh.List)
 		memo.POST("/create", uh.Create)
 		memo.DELETE("/delete", uh.DeleteById)
-		memo.PUT("/update", uh.UpdateById)
+		memo.PUT("/complete", uh.CompleteWithId)
 	}
 }

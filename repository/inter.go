@@ -13,6 +13,6 @@ type MemoRepository interface {
 	ListMemo() ([]*model.Memo, error)
 	CreateMemo(content string) error
 	GetMemoById(id uint) (*model.Memo, error)
-	UpdateMemoById(id uint, content string) error
 	DeleteMemoById(id uint) error
+	CompleteWithId(id uint) error
 }

@@ -10,6 +10,11 @@ type MemoRepo struct {
 	db *gorm.DB
 }
 
+// CompleteWithId implements MemoRepository.
+func (m *MemoRepo) CompleteWithId(id uint) error {
+	return m.db.Model(&model.Memo{}).Where("id = ?", id).UpdateColumn("completed", true).Error
+}
+
 // ListMemo implements MemoRepository.
 func (m *MemoRepo) ListMemo() ([]*model.Memo, error) {
 	var list []*model.Memo
@@ -42,11 +47,6 @@ func (m *MemoRepo) GetMemoById(id uint) (*model.Memo, error) {
 	memo := &model.Memo{}
 	err := m.db.Take(memo, "id = ?", id).Error
 	return memo, err
-}
-
-// UpdateMemoById implements MemoRepository.
-func (m *MemoRepo) UpdateMemoById(id uint, content string) error {
-	return m.db.Model(&model.Memo{}).Where("id = ?", id).Update("content", content).Error
 }
 
 var _ MemoRepository = new(MemoRepo)

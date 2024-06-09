@@ -16,6 +16,7 @@ type User struct {
 type Memo struct {
 	Id        uint   `gorm:"size:10"`
 	Content   string `gorm:"size:255;not null"`
+	Completed bool   `gorm:"not null"`
 	CreatedAt int64  `gorm:"autoCreateTime"`
 	UpdatedAt int64  `gorm:"autoUpdateTime"`
 	DeletedAt soft_delete.DeletedAt
@@ -23,7 +24,8 @@ type Memo struct {
 
 func (m *Memo) ToMemoItem() MemoItem {
 	return MemoItem{
-		Id:      m.Id,
-		Content: m.Content,
+		Id:        m.Id,
+		Content:   m.Content,
+		Completed: m.Completed,
 	}
 }

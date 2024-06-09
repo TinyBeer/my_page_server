@@ -27,7 +27,7 @@ func NewMemoHandler(uc usecase.MemoUsecase) *MemoHandler {
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
 // @Success 200 {object} model.MemoListResponse
-// @Router /memo [get]
+// @Router /memo/list [get]
 func (h *MemoHandler) List(ctx *gin.Context) {
 	list, err := h.usecase.List(ctx)
 	if err != nil {
@@ -58,8 +58,8 @@ func (h *MemoHandler) List(ctx *gin.Context) {
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
 // @Param {object} body model.MemoCreateRequest true "备忘录创建参数"
-// @Success 200 {object} model.SimpleResponse
-// @Router /memo [post]
+// @Success 200 {object} model.Base
+// @Router /memo/create [post]
 func (h *MemoHandler) Create(ctx *gin.Context) {
 	var request model.MemoCreateRequest
 	err := ctx.ShouldBind(&request)
@@ -92,9 +92,9 @@ func (h *MemoHandler) Create(ctx *gin.Context) {
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
 // @Param {object} body model.MemoDeleteRequest true "备忘录删除参数"
-// @Success 200 {object} model.SimpleResponse
-// @Failed 200 {object} model.SimpleResponse
-// @Router /memo [delete]
+// @Success 200 {object} model.Base
+// @Failed 200 {object} model.Base
+// @Router /memo/delete [delete]
 func (h *MemoHandler) DeleteById(ctx *gin.Context) {
 	var request model.MemoDeleteRequest
 	err := ctx.ShouldBind(&request)
@@ -118,19 +118,19 @@ func (h *MemoHandler) DeleteById(ctx *gin.Context) {
 	})
 }
 
-// UpdateById 更新备忘录
-// @Summary 根据Id更新备忘录
+// CompleteWithId 备忘录完成
+// @Summary 根据Id更新备忘录完成状态
 // @Description 使用access_token获取视频列表资源
 // @Tags 备忘录相关接口
 // @Accept application/json
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
-// @Param {object} body model.MemoUpdateRequest true "备忘录删除参数"
-// @Success 200 {object} model.SimpleResponse
-// @Failed 200 {object} model.SimpleResponse
-// @Router /memo [put]
-func (h *MemoHandler) UpdateById(ctx *gin.Context) {
-	var request model.MemoUpdateRequest
+// @Param {object} body model.MemoCompleteRequest true "备忘录完成参数"
+// @Success 200 {object} model.Base
+// @Failed 200 {object} model.Base
+// @Router /memo/complete [put]
+func (h *MemoHandler) CompleteWithId(ctx *gin.Context) {
+	var request model.MemoCompleteRequest
 	err := ctx.ShouldBind(&request)
 	if err != nil {
 		ctx.JSON(http.StatusOK, model.Base{
@@ -139,7 +139,7 @@ func (h *MemoHandler) UpdateById(ctx *gin.Context) {
 		})
 		return
 	}
-	err = h.usecase.UpdateById(ctx, request.Id, request.Content)
+	err = h.usecase.CompleteWithId(ctx, request.Id)
 	if err != nil {
 		ctx.JSON(http.StatusOK, model.Base{
 			Status:  model.StatusError,

@@ -44,19 +44,18 @@ type MemoListResponse struct {
 }
 
 type MemoItem struct {
-	Id      uint   `json:"id,omitempty"`
-	Content string `json:"content,omitempty"`
+	Id        uint   `json:"id"`
+	Content   string `json:"content"`
+	Completed bool   `json:"completed,omitempty"`
 }
 
 type MemoCreateRequest struct {
 	Content string `json:"content,omitempty" binding:"min=2,max=255"`
 }
 
-type MemoUpdateRequest struct {
-	Id      uint   `json:"id,omitempty"`
-	Content string `json:"content,omitempty"`
+type MemoCompleteRequest struct {
+	Id uint `json:"id,omitempty"`
 }
-
 type MemoDeleteRequest struct {
 	Id uint `json:"id,omitempty"`
 }

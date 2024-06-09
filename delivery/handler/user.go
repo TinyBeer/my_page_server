@@ -22,7 +22,7 @@ type UserHandler struct {
 // @Accept application/json
 // @Produce application/json
 // @Param {object} body model.LoginRequest true "登录参数"
-// @Success 200 {object} model.LoginResponse
+// @Success 200 {object} model.Base
 // @Router /user/login [post]
 func (h *UserHandler) Login(ctx *gin.Context) {
 	var loginRequest model.LoginRequest
