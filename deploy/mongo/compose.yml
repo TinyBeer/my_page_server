@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mongo:
+    container_name: my-page_mongo
+    image: mongo:4.2
+    networks:
+      - my-page_network
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/var/lib/mongodb
+      - ./log:/var/log/mongodb
+      - ./init/:/docker-entrypoint-initdb.d/
+      - ./conf/mongo.cnf:/etc/mongod.conf.orig
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    restart: unless-stopped
+
+networks:
+  my-page_network:
+    driver: bridge

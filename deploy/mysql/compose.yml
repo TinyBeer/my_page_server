@@ -1,11 +1,11 @@
 version: '3'
 services:
   mysql:
-    conatiner_name: my_page_mysql
+    container_name: my-page_mysql
     image: mysql:5.7
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
-      - my_page_network
+      - my-page_network
     ports:
       - '3306:3306'
     environment:
@@ -14,8 +14,8 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - ./log:/var/log
-      - ./config/my.cnf:/etc/my.cnf
+      - ./conf/my.cnf:/etc/my.cnf
       - ./data:/var/lib/mysql
 networks:
-  my_page_network:
+  my-page_network:
     driver: bridge
