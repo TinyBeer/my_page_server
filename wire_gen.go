@@ -20,9 +20,9 @@ func InitializeServer() *delivery.WebDeli {
 	viper := config.Get()
 	db := database.GetDb(viper)
 	mongoDatabase := database.GetMongoDB(viper)
-	userRepository := repository.GetUserRepository(viper, db, mongoDatabase)
+	userRepository := repository.GetUserRepository(db, mongoDatabase)
 	userUc := usecase.NewUserUc(userRepository)
-	memoRepository := repository.GetMemoRepository(viper, db, mongoDatabase)
+	memoRepository := repository.GetMemoRepository(db, mongoDatabase)
 	memoUc := usecase.NewMemoUc(memoRepository)
 	webDeli := delivery.NewWebDeli(viper, userUc, memoUc)
 	return webDeli

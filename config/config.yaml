@@ -1,7 +1,7 @@
 server:
   port: 8080
 mysql:
-  enable: true
+  enable: false
   username: root
   password: "123456"
   host: 192.168.56.101
@@ -9,7 +9,7 @@ mysql:
   dbname: my-page
   timeout: 10
 mongo:
-  enable: false
+  enable: true
   host: 192.168.56.101
   port: 27017
   username: my-page

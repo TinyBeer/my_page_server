@@ -2,9 +2,9 @@ package repository
 
 import (
 	"personal_page/model"
+	mongor "personal_page/repository/mongo"
 	"personal_page/repository/mysql"
 
-	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 )
@@ -21,15 +21,35 @@ type MemoRepository interface {
 	CompleteWithId(id string) error
 }
 
-func GetUserRepository(v *viper.Viper, sql *gorm.DB, mongo *mongo.Database) UserRepository {
-	return mysql.NewUserRepo(sql)
+func GetUserRepository(sql *gorm.DB, mongo *mongo.Database) UserRepository {
+	if sql != nil {
+		return mysql.NewUserRepo(sql)
+	}
+
+	if mongo != nil {
+		return mongor.NewUserRepo(mongo)
+	}
+
+	panic("GetUserRepository: no avaliable database")
 }
 
-func GetMemoRepository(v *viper.Viper, sql *gorm.DB, mongo *mongo.Database) MemoRepository {
-	return mysql.NewMemoRepo(sql)
+func GetMemoRepository(sql *gorm.DB, mongo *mongo.Database) MemoRepository {
+	if sql != nil {
+		return mysql.NewMemoRepo(sql)
+	}
+
+	if mongo != nil {
+		return mongor.NewMemoRepo(mongo)
+	}
+	panic("GetMemoRepository: no avaliable database")
 }
 
 var (
 	_ UserRepository = &mysql.UserRepo{}
 	_ MemoRepository = &mysql.MemoRepo{}
+)
+
+var (
+	_ UserRepository = &mongor.UserRepo{}
+	_ MemoRepository = &mongor.MemoRepo{}
 )
