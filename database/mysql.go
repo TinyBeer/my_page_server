@@ -10,6 +10,9 @@ import (
 )
 
 func GetDb(conf *viper.Viper) *gorm.DB {
+	if !conf.GetBool("mysql.enable") {
+		return nil
+	}
 	username := conf.GetString("mysql.username")
 	password := conf.GetString("mysql.password")
 	host := conf.GetString("mysql.host")
@@ -29,7 +32,6 @@ func GetDb(conf *viper.Viper) *gorm.DB {
 	}), &gorm.Config{
 		// SkipDefaultTransaction: true,
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:         dbname + "-",
 			SingularTable:       true,
 			NameReplacer:        nil,
 			NoLowerCase:         false,

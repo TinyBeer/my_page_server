@@ -17,10 +17,9 @@ func InitializeServer() *delivery.WebDeli {
 	wire.Build(
 		config.Get,
 		database.GetDb,
-		repository.NewUserRepo,
-		wire.Bind(new(repository.UserRepository), new(*repository.UserRepo)),
-		repository.NewMemoRepo,
-		wire.Bind(new(repository.MemoRepository), new(*repository.MemoRepo)),
+		database.GetMongoDB,
+		repository.GetUserRepository,
+		repository.GetMemoRepository,
 		usecase.NewUserUc,
 		wire.Bind(new(usecase.UserUsecase), new(*usecase.UserUc)),
 		usecase.NewMemoUc,

@@ -105,7 +105,7 @@ func (h *MemoHandler) DeleteById(ctx *gin.Context) {
 		})
 		return
 	}
-	err = h.usecase.DeleteById(ctx, request.Id)
+	err = h.usecase.DeleteById(ctx, request.ID)
 	if err != nil {
 		ctx.JSON(http.StatusOK, model.Base{
 			Status:  model.StatusError,
@@ -139,7 +139,7 @@ func (h *MemoHandler) CompleteWithId(ctx *gin.Context) {
 		})
 		return
 	}
-	err = h.usecase.CompleteWithId(ctx, request.Id)
+	err = h.usecase.CompleteWithId(ctx, request.ID)
 	if err != nil {
 		ctx.JSON(http.StatusOK, model.Base{
 			Status:  model.StatusError,

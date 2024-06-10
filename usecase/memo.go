@@ -18,7 +18,7 @@ func NewMemoUc(repo repository.MemoRepository) *MemoUc {
 }
 
 // CompleteWithId implements MemoUsecase.
-func (m *MemoUc) CompleteWithId(ctx context.Context, id uint) error {
+func (m *MemoUc) CompleteWithId(ctx context.Context, id string) error {
 	return m.repo.CompleteWithId(id)
 }
 
@@ -28,7 +28,7 @@ func (m *MemoUc) Create(ctx context.Context, content string) error {
 }
 
 // DeleteById implements MemoUsecase.
-func (m *MemoUc) DeleteById(ctx context.Context, id uint) error {
+func (m *MemoUc) DeleteById(ctx context.Context, id string) error {
 	return m.repo.DeleteMemoById(id)
 }
 
