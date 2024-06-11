@@ -26,7 +26,7 @@ ebtn.onclick = async function () {
 ebox.onclick = async function (event) {
   var tg = event.target;
   if (tg.innerHTML == 'x') {
-    var id = parseInt(tg.parentElement.parentElement.firstElementChild.value);
+    var id = tg.parentElement.parentElement.firstElementChild.value;
     if (await deleteMemo(id)) {
       refreshMemoList();
     }

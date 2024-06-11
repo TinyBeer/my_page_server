@@ -24,7 +24,7 @@ type UserRepo struct {
 	col *mongo.Collection
 }
 
-func (r *UserRepo) CreateUser(name string, password string) error {
+func (r *UserRepo) CreateUser(name, password string) error {
 	now := time.Now()
 	u := User{
 		ID:        "",

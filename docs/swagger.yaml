@@ -21,7 +21,7 @@ definitions:
   model.MemoCompleteRequest:
     properties:
       id:
-        type: integer
+        type: string
     type: object
   model.MemoCreateRequest:
     properties:
@@ -33,7 +33,7 @@ definitions:
   model.MemoDeleteRequest:
     properties:
       id:
-        type: integer
+        type: string
     type: object
   model.MemoItem:
     properties:
@@ -42,7 +42,7 @@ definitions:
       content:
         type: string
       id:
-        type: integer
+        type: string
     type: object
   model.MemoListResponse:
     properties:

@@ -10,7 +10,7 @@ import (
 )
 
 type UserRepository interface {
-	CreateUser(name string, password string) error
+	CreateUser(name, password string) error
 	GetUserByName(name string) (*model.User, error)
 }
 

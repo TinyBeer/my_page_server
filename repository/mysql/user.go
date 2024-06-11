@@ -32,7 +32,7 @@ type UserRepo struct {
 	db *gorm.DB
 }
 
-func (u *UserRepo) CreateUser(name string, password string) error {
+func (u *UserRepo) CreateUser(name, password string) error {
 	return u.db.Create(&User{
 		Name:     name,
 		Password: password,

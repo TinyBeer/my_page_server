@@ -1,3 +1,4 @@
 # 忽略视频文件
 video/
 exe/
+tmp/

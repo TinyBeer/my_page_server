@@ -37,5 +37,4 @@ func (wd *WebDeli) registerPageRouter(r *gin.Engine) {
 			})
 		}
 	})
-
 }

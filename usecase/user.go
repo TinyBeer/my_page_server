@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"errors"
+
 	"personal_page/model"
 	"personal_page/repository"
 	"personal_page/usecase/auth"
@@ -24,7 +25,7 @@ func (uc *UserUc) CheckAccessToken(ctx context.Context, accessToken string) (*mo
 }
 
 // Login implements UserUsecase.
-func (uc *UserUc) Login(ctx context.Context, username string, password string) (*model.LoginResult, error) {
+func (uc *UserUc) Login(ctx context.Context, username, password string) (*model.LoginResult, error) {
 	u, err := uc.userRepo.GetUserByName(username)
 	if err != nil {
 		return nil, err

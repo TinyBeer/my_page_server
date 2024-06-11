@@ -7,8 +7,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-var v *viper.Viper
-var once sync.Once
+var (
+	v    *viper.Viper
+	once sync.Once
+)
 
 func Get() *viper.Viper {
 	once.Do(func() {
