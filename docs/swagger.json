@@ -173,6 +173,120 @@
                 }
             }
         },
+        "/movie/create": {
+            "post": {
+                "description": "使用access_token创建新的电影资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "电影相关接口"
+                ],
+                "summary": "根据内容创建新的电影资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "电影创建参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MovieCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Base"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/delete": {
+            "delete": {
+                "description": "使用access_token删除电影资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "电影相关接口"
+                ],
+                "summary": "根据Id删除电影",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "电影删除参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MovieDeleteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Base"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/list": {
+            "get": {
+                "description": "使用access_token获取视频列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "电影相关接口"
+                ],
+                "summary": "获取电影列表资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.MovieListResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/auth": {
             "post": {
                 "description": "使用access_token验证用户身份",
@@ -388,9 +502,83 @@
                 }
             }
         },
+        "model.MovieCreateRequest": {
+            "type": "object",
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "post": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.MovieDeleteRequest": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.MovieItem": {
+            "type": "object",
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "post": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.MovieListResponse": {
+            "type": "object",
+            "properties": {
+                "base": {
+                    "$ref": "#/definitions/model.Base"
+                },
+                "movies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.MovieItem"
+                    }
+                }
+            }
+        },
         "model.VideoItem": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string"
+                },
                 "image": {
                     "type": "string"
                 },

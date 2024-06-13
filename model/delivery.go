@@ -31,6 +31,7 @@ type VideoListResponse struct {
 }
 
 type VideoItem struct {
+	ID    string `json:"id"`
 	Image string `json:"image"`
 	Title string `json:"title"`
 	Time  string `json:"time"`
@@ -59,3 +60,38 @@ type MemoCompleteRequest struct {
 type MemoDeleteRequest struct {
 	ID string `json:"id,omitempty"`
 }
+
+type MovieListResponse struct {
+	Base   `json:"base,omitempty"`
+	Movies []MovieItem `json:"movies,omitempty"`
+}
+
+type MovieItem struct {
+	ID     string   `json:"id,omitempty"`
+	Post   string   `json:"post,omitempty"`
+	Title  string   `json:"title,omitempty"`
+	Tags   []string `json:"tags,omitempty"`
+	Desc   string   `json:"desc,omitempty"`
+	Source string   `json:"source,omitempty"`
+}
+
+type MovieCreateRequest struct {
+	Post   string   `json:"post,omitempty"`
+	Title  string   `json:"title,omitempty"`
+	Tags   []string `json:"tags,omitempty"`
+	Desc   string   `json:"desc,omitempty"`
+	Source string   `json:"source,omitempty"`
+}
+
+type MovieDeleteRequest struct {
+	ID string `json:"id,omitempty"`
+}
+
+// type ListMovieTagResponse struct {
+// 	Base      `json:"base,omitempty"`
+// 	MovieTags []MovieTagItem `json:"movie_tags,omitempty"`
+// }
+
+// type MovieTagItem struct {
+// 	Name string `json:"name,omitempty"`
+// }

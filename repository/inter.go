@@ -1,10 +1,14 @@
 package repository
 
 import (
+	"context"
+
 	"personal_page/model"
+	"personal_page/repository/elastic"
 	mongor "personal_page/repository/mongo"
 	"personal_page/repository/mysql"
 
+	"github.com/elastic/go-elasticsearch/v8"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
 )
@@ -14,11 +18,36 @@ type UserRepository interface {
 	GetUserByName(name string) (*model.User, error)
 }
 
+var (
+	_ UserRepository = &mysql.UserRepo{}
+	_ MemoRepository = &mysql.MemoRepo{}
+)
+
 type MemoRepository interface {
 	ListMemo() ([]*model.Memo, error)
 	CreateMemo(content string) error
 	DeleteMemoById(id string) error
 	CompleteWithId(id string) error
+}
+
+var (
+	_ UserRepository = &mongor.UserRepo{}
+	_ MemoRepository = &mongor.MemoRepo{}
+)
+
+type MovieRepository interface {
+	List(ctx context.Context) ([]*model.Movie, error)
+	Create(ctx context.Context, movie *model.Movie) error
+	DeleteByID(ctx context.Context, id string) error
+}
+
+var _ MovieRepository = new(elastic.MovieRepo)
+
+func GetMovieRepository(es *elasticsearch.TypedClient) MovieRepository {
+	if es != nil {
+		return elastic.NewMovieRepo(es)
+	}
+	panic("GetMovieRepository: no avaliable database")
 }
 
 func GetUserRepository(sql *gorm.DB, mongo *mongo.Database) UserRepository {
@@ -43,13 +72,3 @@ func GetMemoRepository(sql *gorm.DB, mongo *mongo.Database) MemoRepository {
 	}
 	panic("GetMemoRepository: no avaliable database")
 }
-
-var (
-	_ UserRepository = &mysql.UserRepo{}
-	_ MemoRepository = &mysql.MemoRepo{}
-)
-
-var (
-	_ UserRepository = &mongor.UserRepo{}
-	_ MemoRepository = &mongor.MemoRepo{}
-)

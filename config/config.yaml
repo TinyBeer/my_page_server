@@ -15,3 +15,8 @@ mongo:
   username: my-page
   password: "123456"
   dbname: my-page
+elasticsearch:
+  enable: true
+  addresses:
+    - "http://192.168.56.101:9200"
+  

@@ -55,8 +55,56 @@ definitions:
       status:
         type: string
     type: object
+  model.MovieCreateRequest:
+    properties:
+      desc:
+        type: string
+      post:
+        type: string
+      source:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    type: object
+  model.MovieDeleteRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  model.MovieItem:
+    properties:
+      desc:
+        type: string
+      id:
+        type: string
+      post:
+        type: string
+      source:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+    type: object
+  model.MovieListResponse:
+    properties:
+      base:
+        $ref: '#/definitions/model.Base'
+      movies:
+        items:
+          $ref: '#/definitions/model.MovieItem'
+        type: array
+    type: object
   model.VideoItem:
     properties:
+      id:
+        type: string
       image:
         type: string
       intro:
@@ -195,6 +243,81 @@ paths:
       summary: 获取备忘录列表资源
       tags:
       - 备忘录相关接口
+  /movie/create:
+    post:
+      consumes:
+      - application/json
+      description: 使用access_token创建新的电影资源
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 电影创建参数
+        in: body
+        name: '{object}'
+        required: true
+        schema:
+          $ref: '#/definitions/model.MovieCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Base'
+      summary: 根据内容创建新的电影资源
+      tags:
+      - 电影相关接口
+  /movie/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 使用access_token删除电影资源
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 电影删除参数
+        in: body
+        name: '{object}'
+        required: true
+        schema:
+          $ref: '#/definitions/model.MovieDeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Base'
+      summary: 根据Id删除电影
+      tags:
+      - 电影相关接口
+  /movie/list:
+    get:
+      consumes:
+      - application/json
+      description: 使用access_token获取视频列表资源
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MovieListResponse'
+      summary: 获取电影列表资源
+      tags:
+      - 电影相关接口
   /user/auth:
     post:
       consumes:

@@ -18,12 +18,16 @@ func InitializeServer() *delivery.WebDeli {
 		config.Get,
 		database.GetDb,
 		database.GetMongoDB,
+		database.GetES,
 		repository.GetUserRepository,
 		repository.GetMemoRepository,
+		repository.GetMovieRepository,
 		usecase.NewUserUc,
 		wire.Bind(new(usecase.UserUsecase), new(*usecase.UserUc)),
 		usecase.NewMemoUc,
 		wire.Bind(new(usecase.MemoUsecase), new(*usecase.MemoUc)),
+		usecase.NewMovieUc,
+		wire.Bind(new(usecase.MovieUsecase), new(*usecase.MovieUc)),
 		delivery.NewWebDeli,
 	)
 	return &delivery.WebDeli{}

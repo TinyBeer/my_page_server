@@ -18,3 +18,9 @@ type MemoUsecase interface {
 	CompleteWithId(ctx context.Context, id string) error
 	DeleteById(ctx context.Context, id string) error
 }
+
+type MovieUsecase interface {
+	List(ctx context.Context) ([]*model.Movie, error)
+	Create(ctx context.Context, movie *model.Movie) error
+	DeleteById(ctx context.Context, id string) error
+}

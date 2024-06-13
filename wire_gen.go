@@ -24,6 +24,9 @@ func InitializeServer() *delivery.WebDeli {
 	userUc := usecase.NewUserUc(userRepository)
 	memoRepository := repository.GetMemoRepository(db, mongoDatabase)
 	memoUc := usecase.NewMemoUc(memoRepository)
-	webDeli := delivery.NewWebDeli(viper, userUc, memoUc)
+	typedClient := database.GetES(viper)
+	movieRepository := repository.GetMovieRepository(typedClient)
+	movieUc := usecase.NewMovieUc(movieRepository)
+	webDeli := delivery.NewWebDeli(viper, userUc, memoUc, movieUc)
 	return webDeli
 }

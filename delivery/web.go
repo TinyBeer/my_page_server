@@ -16,6 +16,7 @@ type WebDeli struct {
 	port string
 	uc   usecase.UserUsecase
 	muc  usecase.MemoUsecase
+	mvuc usecase.MovieUsecase
 	out  io.Writer
 }
 
@@ -35,6 +36,7 @@ func (wd *WebDeli) router() *gin.Engine {
 	wd.registerUserRouter(r)
 	wd.registerVideoRouter(r)
 	wd.registerMemoRouter(r)
+	wd.registerMovieRouter(r)
 	pprof.Register(r)
 	return r
 }
@@ -45,11 +47,13 @@ func (w *WebDeli) Start() {
 	r.Run(w.port)
 }
 
-func NewWebDeli(conf *viper.Viper, uc usecase.UserUsecase, muc usecase.MemoUsecase) *WebDeli {
+func NewWebDeli(conf *viper.Viper, uc usecase.UserUsecase, muc usecase.MemoUsecase, mvuc usecase.MovieUsecase) *WebDeli {
 	return &WebDeli{
+		port: fmt.Sprintf(":%d", conf.GetInt("server.port")),
 		uc:   uc,
 		muc:  muc,
-		port: fmt.Sprintf(":%d", conf.GetInt("server.port")),
+		mvuc: mvuc,
+		out:  nil,
 	}
 }
 
