@@ -13,17 +13,17 @@ type MovieUc struct {
 
 // Create implements MovieUsecase.
 func (m *MovieUc) Create(ctx context.Context, movie *model.Movie) error {
-	return m.repo.Create(ctx, movie)
+	return nil
 }
 
 // DeleteById implements MovieUsecase.
 func (m *MovieUc) DeleteById(ctx context.Context, id string) error {
-	return m.repo.DeleteByID(ctx, id)
+	return nil
 }
 
 // List implements MovieUsecase.
 func (m *MovieUc) List(ctx context.Context) ([]*model.Movie, error) {
-	return m.repo.List(ctx)
+	return nil, nil
 }
 
 func NewMovieUc(repo repository.MovieRepository) *MovieUc {

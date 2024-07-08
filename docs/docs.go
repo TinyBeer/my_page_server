@@ -568,14 +568,17 @@ const docTemplate = `{
         "model.MovieListResponse": {
             "type": "object",
             "properties": {
-                "base": {
-                    "$ref": "#/definitions/model.Base"
+                "message": {
+                    "type": "string"
                 },
                 "movies": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.MovieItem"
                     }
+                },
+                "status": {
+                    "type": "string"
                 }
             }
         },

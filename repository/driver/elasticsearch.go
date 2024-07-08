@@ -1,4 +1,4 @@
-package database
+package driver
 
 import (
 	"github.com/elastic/go-elasticsearch/v8"

@@ -5,9 +5,9 @@ package main
 
 import (
 	"personal_page/config"
-	"personal_page/database"
 	"personal_page/delivery"
 	"personal_page/repository"
+	"personal_page/repository/driver"
 	"personal_page/usecase"
 
 	"github.com/google/wire"
@@ -16,9 +16,7 @@ import (
 func InitializeServer() *delivery.WebDeli {
 	wire.Build(
 		config.Get,
-		database.GetDb,
-		database.GetMongoDB,
-		database.GetES,
+		driver.GetES,
 		repository.GetUserRepository,
 		repository.GetMemoRepository,
 		repository.GetMovieRepository,

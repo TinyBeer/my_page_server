@@ -1,4 +1,4 @@
-package database
+package driver
 
 import (
 	"fmt"
@@ -9,16 +9,13 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-func GetDb(conf *viper.Viper) *gorm.DB {
-	if !conf.GetBool("mysql.enable") {
-		return nil
-	}
-	username := conf.GetString("mysql.username")
-	password := conf.GetString("mysql.password")
-	host := conf.GetString("mysql.host")
-	port := conf.GetInt("mysql.port")
-	dbname := conf.GetString("mysql.dbname")
-	timeout := conf.GetInt("mysql.timeout")
+func GetMYSQL(conf *viper.Viper) *gorm.DB {
+	username := conf.GetString("database.username")
+	password := conf.GetString("database.password")
+	host := conf.GetString("database.host")
+	port := conf.GetInt("database.port")
+	dbname := conf.GetString("database.dbname")
+	timeout := conf.GetInt("database.timeout")
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local&timeout=%ds",
 		username, password, host, port, dbname, timeout)

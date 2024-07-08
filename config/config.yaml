@@ -1,22 +1,22 @@
 server:
   port: 8080
-mysql:
-  enable: true
+database:
+  driver: mysql
   username: root
   password: "123456"
   host: 192.168.56.101
   port: 3306
   dbname: my-page
   timeout: 10
-mongo:
-  enable: false
-  host: 192.168.56.101
-  port: 27017
-  username: my-page
-  password: "123456"
-  dbname: my-page
+# mongo:
+#   enable: mongo
+#   host: 192.168.56.101
+#   port: 27017
+#   username: my-page
+#   password: "123456"
+#   dbname: my-page
 elasticsearch:
-  enable: true
+  enable: false
   addresses:
     - "http://192.168.56.101:9200"
   

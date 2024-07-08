@@ -94,12 +94,14 @@ definitions:
     type: object
   model.MovieListResponse:
     properties:
-      base:
-        $ref: '#/definitions/model.Base'
+      message:
+        type: string
       movies:
         items:
           $ref: '#/definitions/model.MovieItem'
         type: array
+      status:
+        type: string
     type: object
   model.VideoItem:
     properties:

@@ -25,10 +25,10 @@ fmt:
 clean:
 	rm -rf tmp/* docs/* wire_gen.go
 
-start: build
+run: build
 	./tmp/server.exe
 
-build:  docs/* wire_gen.go
+build:  docs/* wire_gen.go ./tmp/server.exe
 	go build -o tmp/server.exe
 
 docs/*: delivery/handler/*.go

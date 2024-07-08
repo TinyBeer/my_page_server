@@ -62,7 +62,7 @@ type MemoDeleteRequest struct {
 }
 
 type MovieListResponse struct {
-	Base   `json:"base,omitempty"`
+	Base
 	Movies []MovieItem `json:"movies,omitempty"`
 }
 

@@ -70,6 +70,7 @@ func (h *MovieHandler) Create(ctx *gin.Context) {
 		})
 		return
 	}
+
 	movie := &model.Movie{
 		ID:     "",
 		Post:   request.Post,
