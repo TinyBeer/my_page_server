@@ -13,13 +13,13 @@ const (
 )
 
 type DeliTodo struct {
-	ID      string
-	Content string
+	ID      string `json:"id,omitempty"`
+	Content string `json:"content,omitempty"`
 }
 
 type BaseResp struct {
-	Status  string
-	Message string
+	Status  string `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 type DeliTodoListResp struct {
@@ -28,11 +28,11 @@ type DeliTodoListResp struct {
 }
 
 type DeliTodoCreateReq struct {
-	Content string
+	Content string `json:"content,omitempty"`
 }
 
 type DeliTodoDeleteReq struct {
-	ID string
+	ID string `json:"id,omitempty"`
 }
 
 type UcTodo struct {
