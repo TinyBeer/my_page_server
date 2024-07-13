@@ -37,18 +37,6 @@ func (wd *WebDeli) registerMovieRouter(r *gin.Engine) {
 	}
 }
 
-func (wd *WebDeli) registerMemoRouter(r *gin.Engine) {
-	uh := handler.NewMemoHandler(wd.muc)
-	md := middleware.NewMiddleware(wd.uc)
-	memo := r.Group("/memo", md.JWT)
-	{
-		memo.GET("/list", uh.List)
-		memo.POST("/create", uh.Create)
-		memo.DELETE("/delete", uh.DeleteById)
-		memo.PUT("/complete", uh.CompleteWithId)
-	}
-}
-
 func (wd *WebDeli) registerTodoRouter(r *gin.Engine) {
 	h := handler.NewTodoHandler(wd.todo)
 	md := middleware.NewMiddleware(wd.uc)

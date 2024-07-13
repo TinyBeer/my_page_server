@@ -21,14 +21,12 @@ func InitializeServer() *delivery.WebDeli {
 	viper := config.Get()
 	userRepository := repository.GetUserRepository(viper)
 	userUc := usecase.NewUserUc(userRepository)
-	memoRepository := repository.GetMemoRepository(viper)
-	memoUc := usecase.NewMemoUc(memoRepository)
 	typedClient := driver.GetES(viper)
 	movieRepository := repository.GetMovieRepository(typedClient)
 	movieUc := usecase.NewMovieUc(movieRepository)
 	db := driver.GetMYSQL(viper)
 	todoRepository := mysql.NewTodoRepo(db)
 	todoUsecase := usecase.NewTodoUsecase(todoRepository)
-	webDeli := delivery.NewWebDeli(viper, userUc, memoUc, movieUc, todoUsecase)
+	webDeli := delivery.NewWebDeli(viper, userUc, movieUc, todoUsecase)
 	return webDeli
 }

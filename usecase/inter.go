@@ -12,13 +12,6 @@ type UserUsecase interface {
 	RefreshAccessToken(ctx context.Context, refreshToken string) (string, error)
 }
 
-type MemoUsecase interface {
-	List(ctx context.Context) ([]*model.Memo, error)
-	Create(ctx context.Context, content string) error
-	CompleteWithId(ctx context.Context, id string) error
-	DeleteById(ctx context.Context, id string) error
-}
-
 type MovieUsecase interface {
 	List(ctx context.Context) ([]*model.Movie, error)
 	Create(ctx context.Context, movie *model.Movie) error

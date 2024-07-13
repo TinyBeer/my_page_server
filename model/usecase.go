@@ -11,20 +11,6 @@ type User struct {
 	Password string
 }
 
-type Memo struct {
-	ID        string
-	Content   string
-	Completed bool
-}
-
-func (m *Memo) ToMemoItem() MemoItem {
-	return MemoItem{
-		ID:        m.ID,
-		Content:   m.Content,
-		Completed: m.Completed,
-	}
-}
-
 type Movie struct {
 	ID     string
 	Post   string

@@ -39,28 +39,6 @@ type VideoItem struct {
 	Intro string `json:"intro"`
 }
 
-type MemoListResponse struct {
-	Base
-	Memoes []MemoItem `json:"memoes,omitempty"`
-}
-
-type MemoItem struct {
-	ID        string `json:"id"`
-	Content   string `json:"content"`
-	Completed bool   `json:"completed,omitempty"`
-}
-
-type MemoCreateRequest struct {
-	Content string `json:"content,omitempty" binding:"min=2,max=255"`
-}
-
-type MemoCompleteRequest struct {
-	ID string `json:"id,omitempty"`
-}
-type MemoDeleteRequest struct {
-	ID string `json:"id,omitempty"`
-}
-
 type MovieListResponse struct {
 	Base
 	Movies []MovieItem `json:"movies,omitempty"`

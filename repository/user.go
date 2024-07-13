@@ -14,10 +14,7 @@ type UserRepository interface {
 	GetUserByName(name string) (*model.User, error)
 }
 
-var (
-	_ UserRepository = &mysql.UserRepo{}
-	_ MemoRepository = &mysql.MemoRepo{}
-)
+var _ UserRepository = &mysql.UserRepo{}
 
 func GetUserRepository(v *viper.Viper) UserRepository {
 	switch v.GetString("database.driver") {
