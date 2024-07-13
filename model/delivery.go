@@ -86,12 +86,3 @@ type MovieCreateRequest struct {
 type MovieDeleteRequest struct {
 	ID string `json:"id,omitempty"`
 }
-
-// type ListMovieTagResponse struct {
-// 	Base      `json:"base,omitempty"`
-// 	MovieTags []MovieTagItem `json:"movie_tags,omitempty"`
-// }
-
-// type MovieTagItem struct {
-// 	Name string `json:"name,omitempty"`
-// }

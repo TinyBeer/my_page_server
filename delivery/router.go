@@ -48,3 +48,14 @@ func (wd *WebDeli) registerMemoRouter(r *gin.Engine) {
 		memo.PUT("/complete", uh.CompleteWithId)
 	}
 }
+
+func (wd *WebDeli) registerTodoRouter(r *gin.Engine) {
+	h := handler.NewTodoHandler(wd.todo)
+	md := middleware.NewMiddleware(wd.uc)
+	todo := r.Group("/todo", md.JWT)
+	{
+		todo.GET("", h.List)
+		todo.POST("", h.Create)
+		todo.DELETE("", h.DeleteByID)
+	}
+}

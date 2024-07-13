@@ -10,6 +10,7 @@ import (
 	"personal_page/config"
 	"personal_page/delivery"
 	"personal_page/repository"
+	"personal_page/repository/database/mysql"
 	"personal_page/repository/driver"
 	"personal_page/usecase"
 )
@@ -25,6 +26,9 @@ func InitializeServer() *delivery.WebDeli {
 	typedClient := driver.GetES(viper)
 	movieRepository := repository.GetMovieRepository(typedClient)
 	movieUc := usecase.NewMovieUc(movieRepository)
-	webDeli := delivery.NewWebDeli(viper, userUc, memoUc, movieUc)
+	db := driver.GetMYSQL(viper)
+	todoRepository := mysql.NewTodoRepo(db)
+	todoUsecase := usecase.NewTodoUsecase(todoRepository)
+	webDeli := delivery.NewWebDeli(viper, userUc, memoUc, movieUc, todoUsecase)
 	return webDeli
 }

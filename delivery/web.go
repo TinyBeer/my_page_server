@@ -2,9 +2,9 @@ package delivery
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 
+	"personal_page/domain"
 	"personal_page/usecase"
 
 	"github.com/gin-contrib/pprof"
@@ -17,12 +17,12 @@ type WebDeli struct {
 	uc   usecase.UserUsecase
 	muc  usecase.MemoUsecase
 	mvuc usecase.MovieUsecase
-	out  io.Writer
+	todo domain.TodoUsecase
 }
 
 func (wd *WebDeli) router() *gin.Engine {
 	r := gin.New()
-	r.Use(gin.LoggerWithWriter(wd.out), gin.Recovery(), Cors())
+	r.Use(gin.Recovery(), Cors())
 
 	r.Static("/static", "./static")
 
@@ -37,6 +37,7 @@ func (wd *WebDeli) router() *gin.Engine {
 	wd.registerVideoRouter(r)
 	wd.registerMemoRouter(r)
 	wd.registerMovieRouter(r)
+	wd.registerTodoRouter(r)
 	pprof.Register(r)
 	return r
 }
@@ -47,13 +48,19 @@ func (w *WebDeli) Start() {
 	r.Run(w.port)
 }
 
-func NewWebDeli(conf *viper.Viper, uc usecase.UserUsecase, muc usecase.MemoUsecase, mvuc usecase.MovieUsecase) *WebDeli {
+func NewWebDeli(
+	conf *viper.Viper,
+	uc usecase.UserUsecase,
+	muc usecase.MemoUsecase,
+	mvuc usecase.MovieUsecase,
+	todo domain.TodoUsecase,
+) *WebDeli {
 	return &WebDeli{
 		port: fmt.Sprintf(":%d", conf.GetInt("server.port")),
 		uc:   uc,
 		muc:  muc,
 		mvuc: mvuc,
-		out:  nil,
+		todo: todo,
 	}
 }
 

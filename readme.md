@@ -1,7 +1,6 @@
 # my_page_server
 
 一个用于个人资源管理的网页后端服务。计划支持备忘录和个人影院功能。
-目前仅提供简易前端页面访问服务，前端后序会逐步迁移到 [my_page_view](https://github.com/TinyBeer/my_page_view) 项目中。
 
 ## 启动项目
 
@@ -11,10 +10,6 @@
 - make run 启动项目
 
 ## 功能规划
-
-- [ ] 备忘录更改为 todo list
-- [x] 项目启动脚本
-- [x] 个人影院 移除 es
 
 ## 依赖
 
