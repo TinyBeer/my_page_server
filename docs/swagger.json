@@ -18,6 +18,116 @@
     "host": "127.0.0.1:9999",
     "basePath": "/",
     "paths": {
+        "/plan": {
+            "get": {
+                "description": "使用access_token获取Plan列表资源",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Plan相关接口"
+                ],
+                "summary": "获取Plan列表资源",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.PlanListResp"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "使用access_token创建Plan",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Plan相关接口"
+                ],
+                "summary": "根据内容创建新的Plan",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "TODO创建参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PlanCreateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.BaseResp"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "使用access_token删除指定id的Plan",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TODO相关接口"
+                ],
+                "summary": "根据Id删除Plan",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "TODO删除参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.PlanDeleteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.BaseResp"
+                        }
+                    }
+                }
+            }
+        },
         "/todo": {
             "get": {
                 "description": "使用access_token获取TODO列表资源",
@@ -291,6 +401,81 @@
                     "type": "string"
                 }
             }
+        },
+        "domain.Plan": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "times": {
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/domain.PlanType"
+                }
+            }
+        },
+        "domain.PlanCreateReq": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "times": {
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/domain.PlanType"
+                }
+            }
+        },
+        "domain.PlanDeleteReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.PlanListResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/domain.Plan"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.PlanType": {
+            "type": "string",
+            "enum": [
+                "daily",
+                "weekly",
+                "monthly"
+            ],
+            "x-enum-varnames": [
+                "PlanType_Daily",
+                "PlanType_Weekly",
+                "PlanType_Monthly"
+            ]
         },
         "domain.Todo": {
             "type": "object",

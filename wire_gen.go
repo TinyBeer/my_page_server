@@ -23,6 +23,8 @@ func InitializeServer() *delivery.WebDeli {
 	tokenUsecase := usecase.NewTokenUsecase(userRepository)
 	todoRepository := mysql.NewTodoRepository(db)
 	todoUsecase := usecase.NewTodoUsecase(todoRepository)
-	webDeli := delivery.NewWebDeli(viper, tokenUsecase, todoUsecase)
+	planRepository := mysql.NewPlanRepository(db)
+	planUsecase := usecase.NewPlanUsecase(planRepository)
+	webDeli := delivery.NewWebDeli(viper, tokenUsecase, todoUsecase, planUsecase)
 	return webDeli
 }

@@ -21,6 +21,8 @@ func InitializeServer() *delivery.WebDeli {
 		usecase.NewTokenUsecase,
 		mysql.NewTodoRepository,
 		usecase.NewTodoUsecase,
+		mysql.NewPlanRepository,
+		usecase.NewPlanUsecase,
 		delivery.NewWebDeli,
 	)
 	return &delivery.WebDeli{}

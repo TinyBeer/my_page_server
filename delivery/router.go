@@ -12,6 +12,17 @@ import (
 	_ "personal_page/docs"
 )
 
+func (wd *WebDeli) registerPlanRouter(r *gin.Engine) {
+	h := handler.NewPlanHandler(wd.plan)
+	md := middleware.NewMiddleware(wd.token)
+	plan := r.Group("/plan", md.JWT)
+	{
+		plan.GET("", h.List)
+		plan.POST("", h.Create)
+		plan.DELETE("", h.DeleteByID)
+	}
+}
+
 func (wd *WebDeli) registerTokenRouter(r *gin.Engine) {
 	h := handler.NewTokenHandler(wd.token)
 	token := r.Group("/token")

@@ -16,6 +16,56 @@ definitions:
       status:
         type: string
     type: object
+  domain.Plan:
+    properties:
+      content:
+        type: string
+      duration:
+        type: integer
+      id:
+        type: string
+      times:
+        type: integer
+      type:
+        $ref: '#/definitions/domain.PlanType'
+    type: object
+  domain.PlanCreateReq:
+    properties:
+      content:
+        type: string
+      duration:
+        type: integer
+      times:
+        type: integer
+      type:
+        $ref: '#/definitions/domain.PlanType'
+    type: object
+  domain.PlanDeleteReq:
+    properties:
+      id:
+        type: string
+    type: object
+  domain.PlanListResp:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.Plan'
+        type: array
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  domain.PlanType:
+    enum:
+    - daily
+    - weekly
+    - monthly
+    type: string
+    x-enum-varnames:
+    - PlanType_Daily
+    - PlanType_Weekly
+    - PlanType_Monthly
   domain.Todo:
     properties:
       completed_at:
@@ -97,6 +147,79 @@ info:
   title: 个人主页
   version: "1.0"
 paths:
+  /plan:
+    delete:
+      consumes:
+      - application/json
+      description: 使用access_token删除指定id的Plan
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: TODO删除参数
+        in: body
+        name: '{object}'
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PlanDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.BaseResp'
+      summary: 根据Id删除Plan
+      tags:
+      - TODO相关接口
+    get:
+      consumes:
+      - application/json
+      description: 使用access_token获取Plan列表资源
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PlanListResp'
+      summary: 获取Plan列表资源
+      tags:
+      - Plan相关接口
+    post:
+      consumes:
+      - application/json
+      description: 使用access_token创建Plan
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: TODO创建参数
+        in: body
+        name: '{object}'
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PlanCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.BaseResp'
+      summary: 根据内容创建新的Plan
+      tags:
+      - Plan相关接口
   /todo:
     delete:
       consumes:

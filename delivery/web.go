@@ -13,6 +13,7 @@ type WebDeli struct {
 	port  string
 	token domain.TokenUsecase
 	todo  domain.TodoUsecase
+	plan  domain.PlanUsecase
 }
 
 func (wd *WebDeli) router() *gin.Engine {
@@ -22,6 +23,7 @@ func (wd *WebDeli) router() *gin.Engine {
 	wd.registerSupportPage(r)
 	wd.registerTokenRouter(r)
 	wd.registerTodoRouter(r)
+	wd.registerPlanRouter(r)
 	return r
 }
 
@@ -35,11 +37,13 @@ func NewWebDeli(
 	conf *viper.Viper,
 	token domain.TokenUsecase,
 	todo domain.TodoUsecase,
+	plan domain.PlanUsecase,
 ) *WebDeli {
 	return &WebDeli{
 		port:  fmt.Sprintf(":%d", conf.GetInt("server.port")),
 		token: token,
 		todo:  todo,
+		plan:  plan,
 	}
 }
 
