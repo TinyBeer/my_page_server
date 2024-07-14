@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"personal_page/domain"
-	"personal_page/usecase"
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
@@ -13,10 +12,9 @@ import (
 )
 
 type WebDeli struct {
-	port string
-	uc   usecase.UserUsecase
-	mvuc usecase.MovieUsecase
-	todo domain.TodoUsecase
+	port  string
+	token domain.TokenUsecase
+	todo  domain.TodoUsecase
 }
 
 func (wd *WebDeli) router() *gin.Engine {
@@ -32,9 +30,7 @@ func (wd *WebDeli) router() *gin.Engine {
 	})
 
 	wd.registerPageRouter(r)
-	wd.registerUserRouter(r)
-	wd.registerVideoRouter(r)
-	wd.registerMovieRouter(r)
+	wd.registerTokenRouter(r)
 	wd.registerTodoRouter(r)
 	pprof.Register(r)
 	return r
@@ -48,15 +44,13 @@ func (w *WebDeli) Start() {
 
 func NewWebDeli(
 	conf *viper.Viper,
-	uc usecase.UserUsecase,
-	mvuc usecase.MovieUsecase,
+	token domain.TokenUsecase,
 	todo domain.TodoUsecase,
 ) *WebDeli {
 	return &WebDeli{
-		port: fmt.Sprintf(":%d", conf.GetInt("server.port")),
-		uc:   uc,
-		mvuc: mvuc,
-		todo: todo,
+		port:  fmt.Sprintf(":%d", conf.GetInt("server.port")),
+		token: token,
+		todo:  todo,
 	}
 }
 

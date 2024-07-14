@@ -29,7 +29,7 @@ func (t *TodoRepo) List(ctx context.Context) ([]*domain.RepoTodo, error) {
 	return list, err
 }
 
-func NewTodoRepo(db *gorm.DB) domain.TodoRepository {
+func NewTodoRepository(db *gorm.DB) domain.TodoRepository {
 	repo := &TodoRepo{
 		db: db,
 	}

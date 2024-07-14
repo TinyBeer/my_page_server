@@ -26,7 +26,7 @@ func NewTodoHandler(uc domain.TodoUsecase) *TodoHandler {
 // @Accept application/json
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
-// @Success 200 {object} domain.DeliTodoListResp
+// @Success 200 {object} domain.TodoListResp
 // @Router /todo [get]
 func (h *TodoHandler) List(ctx *gin.Context) {
 	list, err := h.uc.List(ctx)
@@ -37,14 +37,14 @@ func (h *TodoHandler) List(ctx *gin.Context) {
 		})
 	}
 
-	data := make([]*domain.DeliTodo, 0, len(list))
+	data := make([]*domain.Todo, 0, len(list))
 	for _, v := range list {
-		data = append(data, &domain.DeliTodo{
+		data = append(data, &domain.Todo{
 			ID:      strconv.Itoa(int(v.ID)),
 			Content: v.Content,
 		})
 	}
-	ctx.JSON(http.StatusOK, domain.DeliTodoListResp{
+	ctx.JSON(http.StatusOK, domain.TodoListResp{
 		BaseResp: domain.BaseResp{Status: domain.StatusOk},
 		Data:     data,
 	})
@@ -57,11 +57,11 @@ func (h *TodoHandler) List(ctx *gin.Context) {
 // @Accept application/json
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
-// @Param {object} body domain.DeliTodoCreateReq true "TODO创建参数"
+// @Param {object} body domain.TodoCreateReq true "TODO创建参数"
 // @Success 200 {object} domain.BaseResp
 // @Router /todo [post]
 func (h *TodoHandler) Create(ctx *gin.Context) {
-	var req domain.DeliTodoCreateReq
+	var req domain.TodoCreateReq
 	err := ctx.ShouldBind(&req)
 	if err != nil {
 		ctx.JSON(http.StatusOK, domain.BaseResp{
@@ -91,12 +91,12 @@ func (h *TodoHandler) Create(ctx *gin.Context) {
 // @Accept application/json
 // @Produce application/json
 // @Param Authorization header string true "访问令牌"
-// @Param {object} body domain.DeliTodoDeleteReq true "TODO删除参数"
+// @Param {object} body domain.TodoDeleteReq true "TODO删除参数"
 // @Success 200 {object} domain.BaseResp
 // @Failed 200 {object} domain.BaseResp
 // @Router /todo [delete]
 func (h *TodoHandler) DeleteByID(ctx *gin.Context) {
-	var req domain.DeliTodoDeleteReq
+	var req domain.TodoDeleteReq
 	err := ctx.ShouldBind(&req)
 	if err != nil {
 		ctx.JSON(http.StatusOK, domain.BaseResp{

@@ -24,275 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/memo/complete": {
-            "put": {
-                "description": "使用access_token获取视频列表资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "备忘录相关接口"
-                ],
-                "summary": "根据Id更新备忘录完成状态",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "备忘录完成参数",
-                        "name": "{object}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.MemoCompleteRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Base"
-                        }
-                    }
-                }
-            }
-        },
-        "/memo/create": {
-            "post": {
-                "description": "使用access_token获取视频列表资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "备忘录相关接口"
-                ],
-                "summary": "根据内容创建新的备忘录",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "备忘录创建参数",
-                        "name": "{object}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.MemoCreateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Base"
-                        }
-                    }
-                }
-            }
-        },
-        "/memo/delete": {
-            "delete": {
-                "description": "使用access_token获取视频列表资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "备忘录相关接口"
-                ],
-                "summary": "根据Id删除备忘录",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "备忘录删除参数",
-                        "name": "{object}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.MemoDeleteRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Base"
-                        }
-                    }
-                }
-            }
-        },
-        "/memo/list": {
-            "get": {
-                "description": "使用access_token获取视频列表资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "备忘录相关接口"
-                ],
-                "summary": "获取备忘录列表资源",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.MemoListResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/movie/create": {
-            "post": {
-                "description": "使用access_token创建新的电影资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "电影相关接口"
-                ],
-                "summary": "根据内容创建新的电影资源",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "电影创建参数",
-                        "name": "{object}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.MovieCreateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Base"
-                        }
-                    }
-                }
-            }
-        },
-        "/movie/delete": {
-            "delete": {
-                "description": "使用access_token删除电影资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "电影相关接口"
-                ],
-                "summary": "根据Id删除电影",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "电影删除参数",
-                        "name": "{object}",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.MovieDeleteRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Base"
-                        }
-                    }
-                }
-            }
-        },
-        "/movie/list": {
-            "get": {
-                "description": "使用access_token获取视频列表资源",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "电影相关接口"
-                ],
-                "summary": "获取电影列表资源",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.MovieListResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/todo": {
             "get": {
                 "description": "使用access_token获取TODO列表资源",
@@ -319,7 +50,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/domain.DeliTodoListResp"
+                            "$ref": "#/definitions/domain.TodoListResp"
                         }
                     }
                 }
@@ -350,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.DeliTodoCreateReq"
+                            "$ref": "#/definitions/domain.TodoCreateReq"
                         }
                     }
                 ],
@@ -389,7 +120,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/domain.DeliTodoDeleteReq"
+                            "$ref": "#/definitions/domain.TodoDeleteReq"
                         }
                     }
                 ],
@@ -403,39 +134,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/auth": {
-            "post": {
-                "description": "使用access_token验证用户身份",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "用户相关接口"
-                ],
-                "summary": "验证用户身份",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "访问令牌",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/user/login": {
+        "/token": {
             "post": {
                 "description": "完成用户登陆操作分发access_token和refresh_token",
                 "consumes": [
@@ -445,7 +144,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "用户相关接口"
+                    "TOKEN相关接口"
                 ],
                 "summary": "用于用户登录",
                 "parameters": [
@@ -455,7 +154,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.LoginRequest"
+                            "$ref": "#/definitions/domain.TokenReq"
                         }
                     }
                 ],
@@ -463,13 +162,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.Base"
+                            "$ref": "#/definitions/domain.TokenResp"
                         }
                     }
                 }
             }
         },
-        "/user/refresh": {
+        "/token/access_token": {
             "post": {
                 "description": "使用refresh_token更新访问令牌",
                 "consumes": [
@@ -495,15 +194,15 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/domain.AccessTokenResp"
                         }
                     }
                 }
             }
         },
-        "/video": {
+        "/token/check": {
             "get": {
-                "description": "使用access_token获取视频列表资源",
+                "description": "使用access_token验证用户身份",
                 "consumes": [
                     "application/json"
                 ],
@@ -511,9 +210,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "视频相关接口"
+                    "用户相关接口"
                 ],
-                "summary": "获取视频列表资源",
+                "summary": "验证用户身份",
                 "parameters": [
                     {
                         "type": "string",
@@ -527,7 +226,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.VideoListResponse"
+                            "$ref": "#/definitions/domain.BaseResp"
                         }
                     }
                 }
@@ -535,6 +234,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "domain.AccessTokenResp": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "domain.BaseResp": {
             "type": "object",
             "properties": {
@@ -546,7 +259,7 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.DeliTodo": {
+        "domain.Todo": {
             "type": "object",
             "properties": {
                 "content": {
@@ -557,7 +270,7 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.DeliTodoCreateReq": {
+        "domain.TodoCreateReq": {
             "type": "object",
             "properties": {
                 "content": {
@@ -565,7 +278,7 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.DeliTodoDeleteReq": {
+        "domain.TodoDeleteReq": {
             "type": "object",
             "properties": {
                 "id": {
@@ -573,13 +286,13 @@ const docTemplate = `{
                 }
             }
         },
-        "domain.DeliTodoListResp": {
+        "domain.TodoListResp": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/domain.DeliTodo"
+                        "$ref": "#/definitions/domain.Todo"
                     }
                 },
                 "message": {
@@ -590,18 +303,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.Base": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.LoginRequest": {
+        "domain.TokenReq": {
             "type": "object",
             "properties": {
                 "password": {
@@ -616,174 +318,20 @@ const docTemplate = `{
                 }
             }
         },
-        "model.MemoCompleteRequest": {
+        "domain.TokenResp": {
             "type": "object",
             "properties": {
-                "id": {
+                "access_token": {
                     "type": "string"
-                }
-            }
-        },
-        "model.MemoCreateRequest": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string",
-                    "maxLength": 255,
-                    "minLength": 2
-                }
-            }
-        },
-        "model.MemoDeleteRequest": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MemoItem": {
-            "type": "object",
-            "properties": {
-                "completed": {
-                    "type": "boolean"
-                },
-                "content": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MemoListResponse": {
-            "type": "object",
-            "properties": {
-                "memoes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.MemoItem"
-                    }
                 },
                 "message": {
                     "type": "string"
                 },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MovieCreateRequest": {
-            "type": "object",
-            "properties": {
-                "desc": {
-                    "type": "string"
-                },
-                "post": {
-                    "type": "string"
-                },
-                "source": {
-                    "type": "string"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MovieDeleteRequest": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MovieItem": {
-            "type": "object",
-            "properties": {
-                "desc": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "post": {
-                    "type": "string"
-                },
-                "source": {
-                    "type": "string"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.MovieListResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "movies": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.MovieItem"
-                    }
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.VideoItem": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "image": {
-                    "type": "string"
-                },
-                "intro": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.VideoListResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
+                "refresh_token": {
                     "type": "string"
                 },
                 "status": {
                     "type": "string"
-                },
-                "videoes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.VideoItem"
-                    }
                 }
             }
         }

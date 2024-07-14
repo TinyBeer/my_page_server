@@ -9,7 +9,6 @@ package main
 import (
 	"personal_page/config"
 	"personal_page/delivery"
-	"personal_page/repository"
 	"personal_page/repository/database/mysql"
 	"personal_page/repository/driver"
 	"personal_page/usecase"
@@ -19,14 +18,11 @@ import (
 
 func InitializeServer() *delivery.WebDeli {
 	viper := config.Get()
-	userRepository := repository.GetUserRepository(viper)
-	userUc := usecase.NewUserUc(userRepository)
-	typedClient := driver.GetES(viper)
-	movieRepository := repository.GetMovieRepository(typedClient)
-	movieUc := usecase.NewMovieUc(movieRepository)
 	db := driver.GetMYSQL(viper)
-	todoRepository := mysql.NewTodoRepo(db)
+	userRepository := mysql.NewUserRepository(db)
+	tokenUsecase := usecase.NewTokenUsecase(userRepository)
+	todoRepository := mysql.NewTodoRepository(db)
 	todoUsecase := usecase.NewTodoUsecase(todoRepository)
-	webDeli := delivery.NewWebDeli(viper, userUc, movieUc, todoUsecase)
+	webDeli := delivery.NewWebDeli(viper, tokenUsecase, todoUsecase)
 	return webDeli
 }

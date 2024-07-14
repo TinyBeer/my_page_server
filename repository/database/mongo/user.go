@@ -4,8 +4,6 @@ import (
 	"context"
 	"time"
 
-	"personal_page/model"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -38,7 +36,7 @@ func (r *UserRepo) CreateUser(name, password string) error {
 	return err
 }
 
-func (r *UserRepo) GetUserByName(name string) (*model.User, error) {
+func (r *UserRepo) GetUserByName(name string) (*User, error) {
 	result := r.col.FindOne(context.Background(), bson.D{
 		{Key: "name", Value: name},
 		{Key: "$or", Value: bson.A{
@@ -49,7 +47,7 @@ func (r *UserRepo) GetUserByName(name string) (*model.User, error) {
 	if result.Err() != nil {
 		return nil, result.Err()
 	}
-	u := &model.User{}
+	u := &User{}
 	err := result.Decode(u)
 	return u, err
 }

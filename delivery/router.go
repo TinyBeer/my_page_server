@@ -7,39 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (wd *WebDeli) registerUserRouter(r *gin.Engine) {
-	uh := handler.NewUserHandler(wd.uc)
+func (wd *WebDeli) registerTokenRouter(r *gin.Engine) {
+	h := handler.NewTokenHandler(wd.token)
+	token := r.Group("/token")
+	token.POST("", h.Gen)
+	token.POST("/access_token", h.AccessToken)
 
-	user := r.Group("/user")
-	user.POST("/login", uh.Login)
-	user.POST("/refresh", uh.RefreshToken)
-
-	md := middleware.NewMiddleware(wd.uc)
-	user.POST("/auth", md.JWT, uh.Auth)
-}
-
-func (wd *WebDeli) registerVideoRouter(r *gin.Engine) {
-	md := middleware.NewMiddleware(wd.uc)
-	video := r.Group("/video", md.JWT)
-	{
-		video.GET("/list", handler.VideoHandler{}.List)
-	}
-}
-
-func (wd *WebDeli) registerMovieRouter(r *gin.Engine) {
-	md := middleware.NewMiddleware(wd.uc)
-	mvh := handler.NewMovieHandler(wd.mvuc)
-	video := r.Group("/movie", md.JWT)
-	{
-		video.GET("/list", mvh.List)
-		video.POST("/create", mvh.Create)
-		video.DELETE("/delete", mvh.DeleteById)
-	}
+	md := middleware.NewMiddleware(wd.token)
+	token.GET("/access_token", md.JWT, h.Check)
 }
 
 func (wd *WebDeli) registerTodoRouter(r *gin.Engine) {
 	h := handler.NewTodoHandler(wd.todo)
-	md := middleware.NewMiddleware(wd.uc)
+	md := middleware.NewMiddleware(wd.token)
 	todo := r.Group("/todo", md.JWT)
 	{
 		todo.GET("", h.List)

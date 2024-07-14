@@ -4,19 +4,18 @@ import (
 	"net/http"
 	"strings"
 
-	"personal_page/model"
-	"personal_page/usecase"
+	"personal_page/domain"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Middleware struct {
-	uc usecase.UserUsecase
+	token domain.TokenUsecase
 }
 
-func NewMiddleware(uc usecase.UserUsecase) *Middleware {
+func NewMiddleware(token domain.TokenUsecase) *Middleware {
 	return &Middleware{
-		uc: uc,
+		token: token,
 	}
 }
 
@@ -24,22 +23,21 @@ func (m *Middleware) JWT(ctx *gin.Context) {
 	accessToken := ctx.GetHeader("Authorization")
 	accessToken = strings.TrimPrefix(accessToken, "Bearer ")
 	if accessToken == "" {
-		ctx.JSON(http.StatusOK, model.Base{
-			Status:  model.StatusError,
-			Message: model.ErrorNoToken,
+		ctx.JSON(http.StatusOK, domain.BaseResp{
+			Status:  domain.StatusError,
+			Message: domain.ErrorNoToken,
 		})
 		ctx.Abort()
 	}
 
-	user, err := m.uc.CheckAccessToken(ctx, accessToken)
+	user, err := m.token.AccessTokenCheck(ctx, accessToken)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, model.Base{
-			Status:  model.StatusError,
+		ctx.JSON(http.StatusUnauthorized, domain.BaseResp{
+			Status:  domain.StatusError,
 			Message: err.Error(),
 		})
 		ctx.Abort()
 		return
 	}
-
 	ctx.Set("user", user)
 }

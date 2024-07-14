@@ -7,31 +7,21 @@ import (
 	"gorm.io/gorm"
 )
 
-const (
-	StatusError = "error"
-	StatusOk    = "ok"
-)
-
-type DeliTodo struct {
+type Todo struct {
 	ID      string `json:"id,omitempty"`
 	Content string `json:"content,omitempty"`
 }
 
-type BaseResp struct {
-	Status  string `json:"status,omitempty"`
-	Message string `json:"message,omitempty"`
-}
-
-type DeliTodoListResp struct {
+type TodoListResp struct {
 	BaseResp
-	Data []*DeliTodo
+	Data []*Todo
 }
 
-type DeliTodoCreateReq struct {
+type TodoCreateReq struct {
 	Content string `json:"content,omitempty"`
 }
 
-type DeliTodoDeleteReq struct {
+type TodoDeleteReq struct {
 	ID string `json:"id,omitempty"`
 }
 

@@ -1,5 +1,14 @@
 basePath: /
 definitions:
+  domain.AccessTokenResp:
+    properties:
+      access_token:
+        type: string
+      message:
+        type: string
+      status:
+        type: string
+    type: object
   domain.BaseResp:
     properties:
       message:
@@ -7,42 +16,35 @@ definitions:
       status:
         type: string
     type: object
-  domain.DeliTodo:
+  domain.Todo:
     properties:
       content:
         type: string
       id:
         type: string
     type: object
-  domain.DeliTodoCreateReq:
+  domain.TodoCreateReq:
     properties:
       content:
         type: string
     type: object
-  domain.DeliTodoDeleteReq:
+  domain.TodoDeleteReq:
     properties:
       id:
         type: string
     type: object
-  domain.DeliTodoListResp:
+  domain.TodoListResp:
     properties:
       data:
         items:
-          $ref: '#/definitions/domain.DeliTodo'
+          $ref: '#/definitions/domain.Todo'
         type: array
       message:
         type: string
       status:
         type: string
     type: object
-  model.Base:
-    properties:
-      message:
-        type: string
-      status:
-        type: string
-    type: object
-  model.LoginRequest:
+  domain.TokenReq:
     properties:
       password:
         maxLength: 18
@@ -53,116 +55,16 @@ definitions:
         minLength: 4
         type: string
     type: object
-  model.MemoCompleteRequest:
+  domain.TokenResp:
     properties:
-      id:
+      access_token:
         type: string
-    type: object
-  model.MemoCreateRequest:
-    properties:
-      content:
-        maxLength: 255
-        minLength: 2
-        type: string
-    type: object
-  model.MemoDeleteRequest:
-    properties:
-      id:
-        type: string
-    type: object
-  model.MemoItem:
-    properties:
-      completed:
-        type: boolean
-      content:
-        type: string
-      id:
-        type: string
-    type: object
-  model.MemoListResponse:
-    properties:
-      memoes:
-        items:
-          $ref: '#/definitions/model.MemoItem'
-        type: array
       message:
+        type: string
+      refresh_token:
         type: string
       status:
         type: string
-    type: object
-  model.MovieCreateRequest:
-    properties:
-      desc:
-        type: string
-      post:
-        type: string
-      source:
-        type: string
-      tags:
-        items:
-          type: string
-        type: array
-      title:
-        type: string
-    type: object
-  model.MovieDeleteRequest:
-    properties:
-      id:
-        type: string
-    type: object
-  model.MovieItem:
-    properties:
-      desc:
-        type: string
-      id:
-        type: string
-      post:
-        type: string
-      source:
-        type: string
-      tags:
-        items:
-          type: string
-        type: array
-      title:
-        type: string
-    type: object
-  model.MovieListResponse:
-    properties:
-      message:
-        type: string
-      movies:
-        items:
-          $ref: '#/definitions/model.MovieItem'
-        type: array
-      status:
-        type: string
-    type: object
-  model.VideoItem:
-    properties:
-      id:
-        type: string
-      image:
-        type: string
-      intro:
-        type: string
-      name:
-        type: string
-      time:
-        type: string
-      title:
-        type: string
-    type: object
-  model.VideoListResponse:
-    properties:
-      message:
-        type: string
-      status:
-        type: string
-      videoes:
-        items:
-          $ref: '#/definitions/model.VideoItem'
-        type: array
     type: object
 host: 127.0.0.1:9999
 info:
@@ -178,183 +80,6 @@ info:
   title: 个人主页
   version: "1.0"
 paths:
-  /memo/complete:
-    put:
-      consumes:
-      - application/json
-      description: 使用access_token获取视频列表资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: 备忘录完成参数
-        in: body
-        name: '{object}'
-        required: true
-        schema:
-          $ref: '#/definitions/model.MemoCompleteRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Base'
-      summary: 根据Id更新备忘录完成状态
-      tags:
-      - 备忘录相关接口
-  /memo/create:
-    post:
-      consumes:
-      - application/json
-      description: 使用access_token获取视频列表资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: 备忘录创建参数
-        in: body
-        name: '{object}'
-        required: true
-        schema:
-          $ref: '#/definitions/model.MemoCreateRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Base'
-      summary: 根据内容创建新的备忘录
-      tags:
-      - 备忘录相关接口
-  /memo/delete:
-    delete:
-      consumes:
-      - application/json
-      description: 使用access_token获取视频列表资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: 备忘录删除参数
-        in: body
-        name: '{object}'
-        required: true
-        schema:
-          $ref: '#/definitions/model.MemoDeleteRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Base'
-      summary: 根据Id删除备忘录
-      tags:
-      - 备忘录相关接口
-  /memo/list:
-    get:
-      consumes:
-      - application/json
-      description: 使用access_token获取视频列表资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.MemoListResponse'
-      summary: 获取备忘录列表资源
-      tags:
-      - 备忘录相关接口
-  /movie/create:
-    post:
-      consumes:
-      - application/json
-      description: 使用access_token创建新的电影资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: 电影创建参数
-        in: body
-        name: '{object}'
-        required: true
-        schema:
-          $ref: '#/definitions/model.MovieCreateRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Base'
-      summary: 根据内容创建新的电影资源
-      tags:
-      - 电影相关接口
-  /movie/delete:
-    delete:
-      consumes:
-      - application/json
-      description: 使用access_token删除电影资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: 电影删除参数
-        in: body
-        name: '{object}'
-        required: true
-        schema:
-          $ref: '#/definitions/model.MovieDeleteRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Base'
-      summary: 根据Id删除电影
-      tags:
-      - 电影相关接口
-  /movie/list:
-    get:
-      consumes:
-      - application/json
-      description: 使用access_token获取视频列表资源
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.MovieListResponse'
-      summary: 获取电影列表资源
-      tags:
-      - 电影相关接口
   /todo:
     delete:
       consumes:
@@ -371,7 +96,7 @@ paths:
         name: '{object}'
         required: true
         schema:
-          $ref: '#/definitions/domain.DeliTodoDeleteReq'
+          $ref: '#/definitions/domain.TodoDeleteReq'
       produces:
       - application/json
       responses:
@@ -398,7 +123,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/domain.DeliTodoListResp'
+            $ref: '#/definitions/domain.TodoListResp'
       summary: 获取TODO列表资源
       tags:
       - TODO相关接口
@@ -417,7 +142,7 @@ paths:
         name: '{object}'
         required: true
         schema:
-          $ref: '#/definitions/domain.DeliTodoCreateReq'
+          $ref: '#/definitions/domain.TodoCreateReq'
       produces:
       - application/json
       responses:
@@ -428,28 +153,7 @@ paths:
       summary: 根据内容创建新的TODO
       tags:
       - TODO相关接口
-  /user/auth:
-    post:
-      consumes:
-      - application/json
-      description: 使用access_token验证用户身份
-      parameters:
-      - description: 访问令牌
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-      summary: 验证用户身份
-      tags:
-      - 用户相关接口
-  /user/login:
+  /token:
     post:
       consumes:
       - application/json
@@ -460,18 +164,18 @@ paths:
         name: '{object}'
         required: true
         schema:
-          $ref: '#/definitions/model.LoginRequest'
+          $ref: '#/definitions/domain.TokenReq'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Base'
+            $ref: '#/definitions/domain.TokenResp'
       summary: 用于用户登录
       tags:
-      - 用户相关接口
-  /user/refresh:
+      - TOKEN相关接口
+  /token/access_token:
     post:
       consumes:
       - application/json
@@ -488,15 +192,15 @@ paths:
         "200":
           description: OK
           schema:
-            type: string
+            $ref: '#/definitions/domain.AccessTokenResp'
       summary: 更新访问令牌
       tags:
       - 用户相关接口
-  /video:
+  /token/check:
     get:
       consumes:
       - application/json
-      description: 使用access_token获取视频列表资源
+      description: 使用access_token验证用户身份
       parameters:
       - description: 访问令牌
         in: header
@@ -509,8 +213,8 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.VideoListResponse'
-      summary: 获取视频列表资源
+            $ref: '#/definitions/domain.BaseResp'
+      summary: 验证用户身份
       tags:
-      - 视频相关接口
+      - 用户相关接口
 swagger: "2.0"
