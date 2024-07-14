@@ -2,11 +2,9 @@ package delivery
 
 import (
 	"fmt"
-	"net/http"
 
 	"personal_page/domain"
 
-	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
@@ -21,18 +19,9 @@ func (wd *WebDeli) router() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery(), Cors())
 
-	r.Static("/static", "./static")
-
-	r.LoadHTMLGlob("./html/*")
-
-	r.NoRoute(func(ctx *gin.Context) {
-		ctx.Redirect(http.StatusTemporaryRedirect, "/nav")
-	})
-
-	wd.registerPageRouter(r)
+	wd.registerSupportPage(r)
 	wd.registerTokenRouter(r)
 	wd.registerTodoRouter(r)
-	pprof.Register(r)
 	return r
 }
 
@@ -53,8 +42,6 @@ func NewWebDeli(
 		todo:  todo,
 	}
 }
-
-var _ WebDelivery = &WebDeli{}
 
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {

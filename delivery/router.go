@@ -4,7 +4,12 @@ import (
 	"personal_page/delivery/handler"
 	"personal_page/delivery/middleware"
 
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	gs "github.com/swaggo/gin-swagger"
+
+	_ "personal_page/docs"
 )
 
 func (wd *WebDeli) registerTokenRouter(r *gin.Engine) {
@@ -27,4 +32,9 @@ func (wd *WebDeli) registerTodoRouter(r *gin.Engine) {
 		todo.DELETE("", h.DeleteByID)
 		todo.PUT("", h.CompleteByID)
 	}
+}
+
+func (wd *WebDeli) registerSupportPage(r *gin.Engine) {
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
+	pprof.Register(r)
 }
