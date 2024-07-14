@@ -39,8 +39,11 @@ func (h *TodoHandler) List(ctx *gin.Context) {
 	data := make([]*domain.Todo, 0, len(list))
 	for _, v := range list {
 		todo := &domain.Todo{
-			ID:      v.ID,
-			Content: v.Content,
+			ID:               v.ID,
+			Content:          v.Content,
+			Times:            v.Times,
+			CompletetedTimes: v.CompletedTimes,
+			Duration:         v.Duration,
 		}
 		if v.Completed {
 			todo.CompletedAt = v.CompletedAt.Format("2006-01-02 15:03:04")
@@ -73,7 +76,16 @@ func (h *TodoHandler) Create(ctx *gin.Context) {
 		})
 		return
 	}
-	err = h.uc.Create(ctx, &domain.UcTodo{Content: req.Content})
+
+	todo := &domain.UcTodo{
+		Content:  req.Content,
+		Duration: req.Duration,
+		Times:    req.Times,
+	}
+	if todo.Times == 0 {
+		todo.Times = 1
+	}
+	err = h.uc.Create(ctx, todo)
 	if err != nil {
 		ctx.JSON(http.StatusOK, domain.BaseResp{
 			Status:  domain.StatusError,
@@ -82,8 +94,7 @@ func (h *TodoHandler) Create(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, domain.BaseResp{
-		Status:  domain.StatusOk,
-		Message: "",
+		Status: domain.StatusOk,
 	})
 }
 

@@ -304,11 +304,20 @@ const docTemplate = `{
                 "completed_at": {
                     "type": "string"
                 },
+                "completeted_times": {
+                    "type": "integer"
+                },
                 "content": {
                     "type": "string"
                 },
+                "duration": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
+                },
+                "times": {
+                    "type": "integer"
                 }
             }
         },
@@ -325,6 +334,12 @@ const docTemplate = `{
             "properties": {
                 "content": {
                     "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "times": {
+                    "type": "integer"
                 }
             }
         },
