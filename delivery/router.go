@@ -25,5 +25,6 @@ func (wd *WebDeli) registerTodoRouter(r *gin.Engine) {
 		todo.GET("", h.List)
 		todo.POST("", h.Create)
 		todo.DELETE("", h.DeleteByID)
+		todo.PUT("", h.CompleteByID)
 	}
 }

@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"context"
+	"time"
 
 	"personal_page/domain"
 
@@ -10,6 +11,11 @@ import (
 
 type TodoRepo struct {
 	db *gorm.DB
+}
+
+// CompleteByID implements domain.TodoRepository.
+func (t *TodoRepo) CompleteByID(ctx context.Context, id uint) error {
+	return t.db.WithContext(ctx).Model(&domain.RepoTodo{Model: gorm.Model{ID: id}}).Update("completed_at", time.Now().Unix()).Error
 }
 
 // Create implements domain.TodoRepository.

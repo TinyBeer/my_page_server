@@ -18,8 +18,15 @@ definitions:
     type: object
   domain.Todo:
     properties:
+      completed_at:
+        type: string
       content:
         type: string
+      id:
+        type: string
+    type: object
+  domain.TodoCompleteReq:
+    properties:
       id:
         type: string
     type: object
@@ -151,6 +158,32 @@ paths:
           schema:
             $ref: '#/definitions/domain.BaseResp'
       summary: 根据内容创建新的TODO
+      tags:
+      - TODO相关接口
+    put:
+      consumes:
+      - application/json
+      description: 使用access_token根据ID更新TODO完成时间
+      parameters:
+      - description: 访问令牌
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: TODO完成参数
+        in: body
+        name: '{object}'
+        required: true
+        schema:
+          $ref: '#/definitions/domain.TodoCompleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.BaseResp'
+      summary: 根据ID更新TODO完成时间
       tags:
       - TODO相关接口
   /token:

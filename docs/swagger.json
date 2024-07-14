@@ -49,6 +49,45 @@
                     }
                 }
             },
+            "put": {
+                "description": "使用access_token根据ID更新TODO完成时间",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TODO相关接口"
+                ],
+                "summary": "根据ID更新TODO完成时间",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "访问令牌",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "TODO完成参数",
+                        "name": "{object}",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/domain.TodoCompleteReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/domain.BaseResp"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "使用access_token创建TODO",
                 "consumes": [
@@ -256,9 +295,20 @@
         "domain.Todo": {
             "type": "object",
             "properties": {
+                "completed_at": {
+                    "type": "string"
+                },
                 "content": {
                     "type": "string"
                 },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "domain.TodoCompleteReq": {
+            "type": "object",
+            "properties": {
                 "id": {
                     "type": "string"
                 }
