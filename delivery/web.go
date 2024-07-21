@@ -17,8 +17,8 @@ type WebDeli struct {
 }
 
 func (wd *WebDeli) router() *gin.Engine {
-	r := gin.New()
-	r.Use(gin.Recovery(), Cors())
+	r := gin.Default()
+	r.Use(Cors())
 
 	wd.registerSupportPage(r)
 	wd.registerTokenRouter(r)

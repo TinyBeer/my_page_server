@@ -18,7 +18,7 @@ type Todo struct {
 
 type TodoListResp struct {
 	BaseResp
-	Data []*Todo
+	Data []*Todo `json:"data,omitempty"`
 }
 
 type TodoCreateReq struct {
